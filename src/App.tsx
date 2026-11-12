@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { StoreProvider } from './lib/store';
 import { NavigationProvider, useNavigation } from './lib/navigation';
 import { ToastProvider } from './components/shared/toast';
+import { ErrorBoundary } from './components/shared/error-boundary';
+import { SettingsProvider } from './lib/settings';
 import { AuthProvider, useAuth } from './lib/auth';
 import { AppSidebar } from './components/layout/app-sidebar';
 import { MobileSidebar } from './components/layout/mobile-sidebar';
@@ -106,6 +108,7 @@ const AppContent: React.FC = () => {
         {/* Viewport Content */}
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="max-w-7xl mx-auto pb-12">
+            <ErrorBoundary>
             {currentRoute === 'dashboard' && <DashboardView />}
             {currentRoute === 'clients' && <ClientsTableView />}
             {currentRoute === 'client-details' && selectedClientId && (
@@ -121,6 +124,7 @@ const AppContent: React.FC = () => {
             {currentRoute === 'risk-monitor' && <RiskMonitoringDashboard />}
             {currentRoute === 'reports' && <ReportsView />}
             {currentRoute === 'settings' && <SettingsView />}
+            </ErrorBoundary>
           </div>
         </main>
       </div>
@@ -166,11 +170,13 @@ export default function App() {
   return (
     <ToastProvider>
       <AuthProvider>
+        <SettingsProvider>
         <StoreProvider>
           <NavigationProvider>
             <AppContent />
           </NavigationProvider>
         </StoreProvider>
+        </SettingsProvider>
       </AuthProvider>
     </ToastProvider>
   );

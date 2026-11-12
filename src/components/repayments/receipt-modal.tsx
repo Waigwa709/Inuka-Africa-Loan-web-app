@@ -1,9 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { X, Download, Printer, FileText } from 'lucide-react';
+import { X, Download, Printer, FileText, AlertTriangle } from 'lucide-react';
 import { ReceiptData, generateReceiptPDF, ReceiptPreview } from '../../lib/receipt-generator';
 import { useSettings } from '../../lib/settings';
 import { useToast } from '../shared/toast';
 import { useStore } from '../../lib/store';
+
+class ReceiptErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean; message: string }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, message: '' };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, message: error.message };
+  }
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error('Receipt render error:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-8 text-center">
+          <AlertTriangle className="w-10 h-10 text-[#E4332C] mx-auto mb-3" />
+          <h3 className="text-base font-bold text-[#17231F]">Unable to display receipt</h3>
+          <p className="text-sm text-[#718078] mt-1">{this.state.message || 'An unexpected error occurred while rendering the receipt.'}</p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 interface ReceiptModalProps {
   isOpen: boolean;
@@ -51,8 +76,13 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
 
   if (!isOpen) return null;
 
-  const totalRepaid = paymentHistory.reduce((sum, p) => sum + p.amount, 0);
-  const outstandingBalance = loanDetails ? Math.max(0, loanDetails.totalAmountDue - totalRepaid) : 0;
+  const toNum = (v: any) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const totalRepaid = paymentHistory.reduce((sum, p) => sum + toNum(p.amount), 0);
+  const outstandingBalance = loanDetails ? Math.max(0, toNum(loanDetails.totalAmountDue) - totalRepaid) : 0;
   const totalPayments = paymentHistory.length;
 
   const receiptData: ReceiptData = {
@@ -62,9 +92,9 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
     clientNumber: repayment.clientNumber,
     loanReference: repayment.loanReference,
     loanPurpose: repayment.loanPurpose,
-    amount: repayment.amount,
+    amount: toNum(repayment.amount),
     paymentDate: repayment.paymentDate,
-    paymentMethod: repayment.paymentMethod,
+    paymentMethod: repayment.paymentMethod || 'M-Pesa',
     notes: repayment.notes,
     institutionName: settings.institutionName,
     tagline: settings.tagline,
@@ -72,12 +102,12 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
     totalPayments,
     paymentHistory: paymentHistory.map(p => ({
       date: p.paymentDate,
-      amount: p.amount,
+      amount: toNum(p.amount),
       method: p.paymentMethod || 'M-Pesa',
       reference: p.paymentReference,
     })),
     outstandingBalance,
-    totalLoanAmount: loanDetails?.totalAmountDue || 0,
+    totalLoanAmount: toNum(loanDetails?.totalAmountDue),
     totalRepaid,
   };
 
@@ -127,7 +157,9 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
-          <ReceiptPreview data={receiptData} />
+          <ReceiptErrorBoundary>
+            <ReceiptPreview data={receiptData} />
+          </ReceiptErrorBoundary>
         </div>
 
         {/* Footer Actions */}

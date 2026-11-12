@@ -42,11 +42,12 @@ export const RepaymentsTableView: React.FC = () => {
   // Filter and search
   const filteredRepayments = useMemo(() => {
     return repayments.filter((rep) => {
+      const term = searchTerm.toLowerCase();
       const matchesSearch =
-        rep.paymentReference.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        rep.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        rep.loanReference.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (rep.notes && rep.notes.toLowerCase().includes(searchTerm.toLowerCase()));
+        (rep.paymentReference || '').toLowerCase().includes(term) ||
+        (rep.clientName || '').toLowerCase().includes(term) ||
+        (rep.loanReference || '').toLowerCase().includes(term) ||
+        (rep.notes && rep.notes.toLowerCase().includes(term));
 
       const matchesLoan = loanFilter === 'all' || rep.loanReference === loanFilter;
 
