@@ -35,19 +35,21 @@ src/
 │   │   └── types.ts                 # Strongly typed AI payloads
 │   │
 │   └── analytics/
-│       ├── portfolio-analytics.ts   # Authoritative portfolio calculations
+│       ├── portfolio-analytics.ts   # Portfolio-level calculations
 │       ├── repayment-analytics.ts   # Period collections & client rankings
-│       └── risk-analysis.ts         # Transparent, explainable risk rules
+│       └── risk-analysis.ts         # Rule-based risk rules
 │
 ├── components/
 │   ├── ai/
 │   │   ├── ai-chat-assistant.tsx    # Natural language Q&A assistant
-│   │   ├── ai-report-generator.tsx  # Executive reporting suite & PDF exporter
+│   │   ├── ai-report-generator.tsx  # Executive reporting suite
 │   │   └── risk-monitoring-dashboard.tsx # Rule-based early warning system
-│   └── database/
-│       └── database-schema-view.tsx # MySQL & Prisma schema inspector
+│   ├── clients/                     # Client list, details & forms
+│   ├── loans/                       # Loan list, details & forms
+│   ├── repayments/                  # Repayment tracking, receipts & PDF export
+│   └── shared/                      # Reusable UI (stat cards, badges, toasts)
 │
-└── server.ts                        # Full-stack Express API endpoints
+└── server.ts                        # Express API + Vite dev middleware
 ```
 
 ---
@@ -93,7 +95,7 @@ src/
 
 ### Environment Configuration (`.env`)
 ```bash
-# Gemini API Key (automatically injected in AI Studio)
+# Gemini API Key
 GEMINI_API_KEY="your_gemini_api_key_here"
 
 # AI Provider Selection (default: gemini, supports: openai)
@@ -106,7 +108,7 @@ DATABASE_URL="mysql://inuka_user:password@localhost:3306/inuka_microfinance"
 ### Running the Development Server
 ```bash
 npm run dev
-# Starts full-stack Express server at http://localhost:3000 with Vite middleware
+# Starts full-stack Express server at http://localhost:3002 with Vite middleware
 ```
 
 ### Running Automated Tests
@@ -115,10 +117,8 @@ npm test
 # Executes comprehensive automated test suite (22 tests covering financial analytics, risk rules, and AI grounding)
 ```
 
-### Running Database Migrations
-To inspect the relational database schema, navigate to **MySQL & Prisma Schema** in the application sidebar, or inspect:
-- `prisma/schema.sql`: Production MySQL DDL script with InnoDB tables, decimal types, indexes, and materialized views.
-- `prisma/schema.prisma`: Type-safe Prisma ORM model definitions.
+### Database Schema
+The relational schema lives in `prisma/schema.sql` (MySQL DDL) and `prisma/schema.prisma` (Prisma model definitions for reference). The app itself queries MySQL through a `mysql2` connection pool in `src/lib/db.ts`.
 
 ---
 

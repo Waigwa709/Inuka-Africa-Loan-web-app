@@ -3,41 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      (function() {
-        try {
-          var originalFetch = window.fetch;
-          var _fetch = typeof originalFetch === 'function' ? originalFetch.bind(window) : originalFetch;
-          Object.defineProperty(window, 'fetch', {
-            get: function() {
-              return _fetch;
-            },
-            set: function(val) {
-              _fetch = val;
-            },
-            configurable: true,
-            enumerable: true,
-          });
-        } catch (e) {
-          try {
-            if (typeof Window !== 'undefined' && Window.prototype) {
-              var protoFetch = Window.prototype.fetch;
-              var _pFetch = typeof protoFetch === 'function' ? protoFetch.bind(window) : protoFetch;
-              Object.defineProperty(Window.prototype, 'fetch', {
-                get: function() {
-                  return _pFetch;
-                },
-                set: function(val) {
-                  _pFetch = val;
-                },
-                configurable: true,
-                enumerable: true,
-              });
-            }
-          } catch (err) {}
-        }
-      })();
-    </script>
     <title>Inuka Africa - Loan Repayment Tracker</title>
     <meta name="description" content="Professional microfinance loan repayment tracking and portfolio management dashboard for Inuka Africa." />
     <meta property="og:title" content="Inuka Africa - Loan Repayment Tracker" />
