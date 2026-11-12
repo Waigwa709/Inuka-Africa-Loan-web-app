@@ -72,9 +72,6 @@ export const Breadcrumbs: React.FC = () => {
           {currentRoute === 'reports' && (
             <span className="font-semibold text-[#17231F]">Portfolio Reports</span>
           )}
-          {currentRoute === 'database-schema' && (
-            <span className="font-semibold text-[#17231F]">MySQL & Prisma Schema</span>
-          )}
           {currentRoute === 'settings' && (
             <span className="font-semibold text-[#17231F]">System Settings</span>
           )}

@@ -11,7 +11,6 @@ import {
   Sparkles,
   FileSpreadsheet,
   ShieldAlert,
-  Database,
 } from 'lucide-react';
 import { InukaLogo } from './inuka-logo';
 import { useNavigation, AppRoute } from '../../lib/navigation';
@@ -46,7 +45,6 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
 
   const navItemsManagement = [
     { id: 'reports' as AppRoute, label: 'Portfolio Overview', icon: BarChart3 },
-    { id: 'database-schema' as AppRoute, label: 'MySQL & Prisma Schema', icon: Database },
     { id: 'settings' as AppRoute, label: 'Settings', icon: Settings },
   ];
 

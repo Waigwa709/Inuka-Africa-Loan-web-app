@@ -7,15 +7,21 @@ import {
   PieChart,
   Calendar,
   CheckCircle2,
+  FileDown,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { formatKES } from '../../lib/currency';
 import { StatCard } from '../shared/stat-card';
+import { MonthlyTrendChart } from './monthly-trend-chart';
+import { exportPortfolioToPDF } from '../../lib/pdf-export';
+import { calculatePortfolioMetrics } from '../../lib/analytics/portfolio-analytics';
+import { calculateRepaymentInsights } from '../../lib/analytics/repayment-analytics';
+import { assessPortfolioRisk } from '../../lib/analytics/risk-analysis';
 import { useToast } from '../shared/toast';
 
 export const ReportsView: React.FC = () => {
-  const { totalDisbursed, totalRepaidAll, totalOutstandingBalance, loans, totalClientsCount } = useStore();
-  const { success } = useToast();
+  const { totalDisbursed, totalRepaidAll, totalOutstandingBalance, loans, totalClientsCount, repayments, clients, clientsWithStats } = useStore();
+  const { success, error: toastError } = useToast();
 
   const collectionRate =
     totalDisbursed > 0 ? ((totalRepaidAll / totalDisbursed) * 100).toFixed(1) : '0.0';
@@ -25,7 +31,17 @@ export const ReportsView: React.FC = () => {
   const outstandingCount = loans.filter((l) => l.status === 'Outstanding').length;
 
   const handleExportSummary = () => {
-    success('Portfolio Report Generated', 'Executive loan summary PDF export queued for download.');
+    try {
+      const metrics = calculatePortfolioMetrics(loans, repayments, clients.length);
+      const insights = calculateRepaymentInsights(loans, repayments, clientsWithStats);
+      const risk = assessPortfolioRisk(loans, repayments);
+
+      exportPortfolioToPDF({ metrics, insights, risk });
+      success('PDF Exported', 'Portfolio report downloaded as PDF.');
+    } catch (err: any) {
+      console.error('PDF export error:', err);
+      toastError('PDF Export Failed', err.message || 'Could not generate PDF.');
+    }
   };
 
   return (
@@ -41,10 +57,10 @@ export const ReportsView: React.FC = () => {
 
         <button
           onClick={handleExportSummary}
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-[#E5E7EB] rounded-lg transition-colors cursor-pointer shadow-xs"
+          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
         >
-          <Download className="w-4 h-4 text-slate-500" />
-          <span>Export Summary Report</span>
+          <FileDown className="w-4 h-4" />
+          <span>Export PDF Report</span>
         </button>
       </div>
 
@@ -69,6 +85,9 @@ export const ReportsView: React.FC = () => {
           icon={BarChart3}
         />
       </div>
+
+      {/* Monthly Trend Chart */}
+      <MonthlyTrendChart />
 
       {/* Breakdown Grids */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -9,23 +9,42 @@ import {
   ShieldCheck,
   Building2,
   Check,
+  Edit3,
 } from 'lucide-react';
 import { Breadcrumbs } from './breadcrumbs';
 import { useNavigation } from '../../lib/navigation';
+import { useAuth } from '../../lib/auth';
 import { useToast } from '../shared/toast';
 
 interface AppHeaderProps {
   onOpenMobileMenu: () => void;
+  onOpenProfile: () => void;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu }) => {
+export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenProfile }) => {
   const { setIsSearchOpen, navigateTo } = useNavigation();
-  const { info } = useToast();
+  const { user, logout } = useAuth();
+  const { info, success } = useToast();
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const handleLogout = () => {
+    setIsUserMenuOpen(false);
+    logout();
+    success('Signed Out', 'You have been signed out successfully.');
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -142,24 +161,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu }) => {
             aria-expanded={isUserMenuOpen}
             aria-haspopup="true"
           >
-            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0">
-              <img
-                src="/src/assets/images/avatar_operations_admin_1794488664702.jpg"
-                alt="Operations Admin"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-              />
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0 bg-[#287A46] flex items-center justify-center text-white text-xs font-bold">
+              {user ? getInitials(user.fullName) : 'OA'}
             </div>
 
             <div className="hidden lg:flex flex-col text-left">
               <span className="text-xs font-semibold text-[#17231F] leading-tight">
-                Operations Admin
+                {user?.fullName || 'Operations Admin'}
               </span>
               <span className="text-[11px] text-[#718078] leading-tight">
-                Administrator
+                {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Administrator'}
               </span>
             </div>
 
@@ -169,8 +180,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu }) => {
           {isUserMenuOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-[#E5E7EB] py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="px-4 py-2.5 border-b border-slate-100">
-                <p className="text-xs font-bold text-[#17231F]">Operations Admin</p>
-                <p className="text-[11px] text-[#718078] truncate">admin.ops@inukaafrica.com</p>
+                <p className="text-xs font-bold text-[#17231F]">{user?.fullName || 'Operations Admin'}</p>
+                <p className="text-[11px] text-[#718078] truncate">{user?.email || 'admin.ops@inukaafrica.com'}</p>
                 <div className="mt-1 flex items-center gap-1 text-[10px] text-[#287A46] font-medium">
                   <ShieldCheck className="w-3 h-3" />
                   <span>Verified Staff Role</span>
@@ -178,6 +189,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu }) => {
               </div>
 
               <div className="py-1">
+                <button
+                  onClick={() => {
+                    setIsUserMenuOpen(false);
+                    onOpenProfile();
+                  }}
+                  className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#17231F] hover:bg-slate-50 transition-colors cursor-pointer text-left"
+                >
+                  <Edit3 className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Edit Profile</span>
+                </button>
                 <button
                   onClick={() => {
                     setIsUserMenuOpen(false);
@@ -203,10 +224,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu }) => {
 
               <div className="border-t border-slate-100 pt-1">
                 <button
-                  onClick={() => {
-                    setIsUserMenuOpen(false);
-                    info('Session active: Admin role cannot be signed out during assessment evaluation.');
-                  }}
+                  onClick={handleLogout}
                   className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#E92F2B] hover:bg-red-50 transition-colors cursor-pointer text-left"
                 >
                   <LogOut className="w-3.5 h-3.5 text-[#E92F2B]" />

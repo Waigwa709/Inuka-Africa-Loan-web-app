@@ -13,6 +13,7 @@ import {
   Building2,
   ShieldCheck,
   RefreshCw,
+  FileDown,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { calculatePortfolioMetrics } from '../../lib/analytics/portfolio-analytics';
@@ -20,6 +21,7 @@ import { calculateRepaymentInsights } from '../../lib/analytics/repayment-analyt
 import { assessPortfolioRisk } from '../../lib/analytics/risk-analysis';
 import { ReportCategory, StructuredManagementReport } from '../../lib/ai/types';
 import { formatKES } from '../../lib/currency';
+import { exportReportToPDF } from '../../lib/pdf-export';
 import { useToast } from '../shared/toast';
 
 export const AIReportGenerator: React.FC = () => {
@@ -103,6 +105,17 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handlePDFExport = () => {
+    if (!generatedReport) return;
+    try {
+      exportReportToPDF(generatedReport);
+      success('PDF Exported', 'Report downloaded as PDF.');
+    } catch (err: any) {
+      console.error('PDF export error:', err);
+      toastError('PDF Export Failed', err.message || 'Could not generate PDF.');
+    }
   };
 
   return (
@@ -235,11 +248,18 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
                 <span>Copy Text</span>
               </button>
               <button
+                onClick={handlePDFExport}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#287A46] rounded-lg hover:bg-[#1E6337] transition-colors cursor-pointer"
+              >
+                <FileDown className="w-3.5 h-3.5" />
+                <span>Export PDF</span>
+              </button>
+              <button
                 onClick={handlePrint}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#111827] rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <Printer className="w-3.5 h-3.5" />
-                <span>Print / Save PDF</span>
+                <span>Print</span>
               </button>
             </div>
           </div>

@@ -11,8 +11,7 @@ export type AppRoute =
   | 'ai-reports'
   | 'risk-monitor'
   | 'reports'
-  | 'settings'
-  | 'database-schema';
+  | 'settings';
 
 interface NavigationContextType {
   currentRoute: AppRoute;
@@ -70,7 +69,7 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setCurrentRoute('loan-details');
         setSelectedLoanId(parts[1]);
       } else if (
-        ['dashboard', 'clients', 'loans', 'repayments', 'ai-chat', 'ai-reports', 'risk-monitor', 'reports', 'settings', 'database-schema'].includes(base)
+        ['dashboard', 'clients', 'loans', 'repayments', 'ai-chat', 'ai-reports', 'risk-monitor', 'reports', 'settings'].includes(base)
       ) {
         setCurrentRoute(base);
       }

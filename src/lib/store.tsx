@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { Client, ClientWithStats } from '../types/client';
-import { Loan, deriveLoanStatus } from '../types/loan';
+import { Loan } from '../types/loan';
 import { Repayment } from '../types/repayment';
-import { INITIAL_CLIENTS, INITIAL_REPAYMENTS, getInitialLoans } from './mock-data';
 import { roundCurrency } from './currency';
 
 interface AddClientParams {
@@ -41,83 +40,106 @@ interface StoreContextType {
   totalDisbursed: number;
   totalRepaidAll: number;
   totalOutstandingBalance: number;
-  addClient: (params: AddClientParams) => { success: boolean; error?: string; client?: Client };
-  addLoan: (params: AddLoanParams) => { success: boolean; error?: string; loan?: Loan };
-  recordRepayment: (params: RecordRepaymentParams) => { success: boolean; error?: string; repayment?: Repayment };
+  loading: boolean;
+  error: string | null;
+  addClient: (params: AddClientParams) => Promise<{ success: boolean; error?: string; client?: Client }>;
+  addLoan: (params: AddLoanParams) => Promise<{ success: boolean; error?: string; loan?: Loan }>;
+  recordRepayment: (params: RecordRepaymentParams) => Promise<{ success: boolean; error?: string; repayment?: Repayment }>;
   getClientById: (id: string) => ClientWithStats | undefined;
   getLoanById: (id: string) => Loan | undefined;
   getClientLoans: (clientId: string) => Loan[];
   getLoanRepayments: (loanId: string) => Repayment[];
   getNextLoanReference: () => string;
   getNextClientNumber: () => string;
-  resetToSeedData: () => void;
+  refreshData: () => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextType | null>(null);
 
-const STORAGE_KEYS = {
-  CLIENTS: 'inuka_clients_v1',
-  LOANS: 'inuka_loans_v1',
-  REPAYMENTS: 'inuka_repayments_v1',
-};
+const transformClient = (apiClient: any): Client => ({
+  id: apiClient.id,
+  clientNumber: apiClient.client_number,
+  fullName: apiClient.full_name,
+  phone: apiClient.phone,
+  email: apiClient.email,
+  location: apiClient.location,
+  dateRegistered: apiClient.date_registered?.split('T')[0] || apiClient.date_registered,
+  notes: apiClient.notes,
+});
+
+const transformLoan = (apiLoan: any): Loan => ({
+  id: apiLoan.id,
+  loanReference: apiLoan.loan_reference,
+  clientId: apiLoan.client_id,
+  clientName: apiLoan.client_name,
+  clientNumber: apiLoan.client_number,
+  loanAmount: parseFloat(apiLoan.loan_amount),
+  totalAmountDue: parseFloat(apiLoan.total_amount_due),
+  totalRepaid: parseFloat(apiLoan.total_repaid || 0),
+  outstandingBalance: parseFloat(apiLoan.outstanding_balance || 0),
+  loanDate: apiLoan.loan_date?.split('T')[0] || apiLoan.loan_date,
+  dueDate: apiLoan.due_date?.split('T')[0] || apiLoan.due_date,
+  purpose: apiLoan.purpose,
+  status: apiLoan.status as Loan['status'],
+});
+
+const transformRepayment = (apiRepayment: any): Repayment => ({
+  id: apiRepayment.id,
+  paymentReference: apiRepayment.payment_reference,
+  loanId: apiRepayment.loan_id,
+  loanReference: apiRepayment.loan_reference,
+  clientId: apiRepayment.client_id,
+  clientName: apiRepayment.client_name,
+  paymentDate: apiRepayment.payment_date?.split('T')[0] || apiRepayment.payment_date,
+  amount: parseFloat(apiRepayment.amount),
+  dateRecorded: apiRepayment.date_recorded,
+  paymentMethod: apiRepayment.payment_method as Repayment['paymentMethod'],
+  notes: apiRepayment.notes,
+});
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [clients, setClients] = useState<Client[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.CLIENTS);
-      if (saved) return JSON.parse(saved);
-    } catch {
-      // fallback
-    }
-    return INITIAL_CLIENTS;
-  });
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loans, setLoans] = useState<Loan[]>([]);
+  const [repayments, setRepayments] = useState<Repayment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [loans, setLoans] = useState<Loan[]>(() => {
+  const fetchData = useCallback(async () => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.LOANS);
-      if (saved) return JSON.parse(saved);
-    } catch {
-      // fallback
-    }
-    return getInitialLoans();
-  });
+      setLoading(true);
+      setError(null);
 
-  const [repayments, setRepayments] = useState<Repayment[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.REPAYMENTS);
-      if (saved) return JSON.parse(saved);
-    } catch {
-      // fallback
-    }
-    return INITIAL_REPAYMENTS;
-  });
+      const [clientsRes, loansRes, repaymentsRes] = await Promise.all([
+        fetch('/api/clients'),
+        fetch('/api/loans'),
+        fetch('/api/repayments'),
+      ]);
 
-  // Save to localStorage on change
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients));
-    } catch (e) {
-      console.warn('Failed to save clients to storage', e);
-    }
-  }, [clients]);
+      if (!clientsRes.ok || !loansRes.ok || !repaymentsRes.ok) {
+        throw new Error('Failed to fetch data from server');
+      }
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.LOANS, JSON.stringify(loans));
-    } catch (e) {
-      console.warn('Failed to save loans to storage', e);
+      const [clientsData, loansData, repaymentsData] = await Promise.all([
+        clientsRes.json(),
+        loansRes.json(),
+        repaymentsRes.json(),
+      ]);
+
+      setClients(clientsData.map(transformClient));
+      setLoans(loansData.map(transformLoan));
+      setRepayments(repaymentsData.map(transformRepayment));
+    } catch (err: any) {
+      console.error('Error fetching data:', err);
+      setError(err.message || 'Failed to load data');
+    } finally {
+      setLoading(false);
     }
-  }, [loans]);
+  }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.REPAYMENTS, JSON.stringify(repayments));
-    } catch (e) {
-      console.warn('Failed to save repayments to storage', e);
-    }
-  }, [repayments]);
+    fetchData();
+  }, [fetchData]);
 
-  // Derived client statistics
   const clientsWithStats: ClientWithStats[] = useMemo(() => {
     return clients.map((client) => {
       const clientLoans = loans.filter((l) => l.clientId === client.id);
@@ -135,7 +157,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   }, [clients, loans]);
 
-  // Summary Metrics calculated dynamically from real data
   const totalClientsCount = clients.length;
   const activeLoansCount = loans.filter((l) => l.status !== 'Fully Paid').length;
   const totalDisbursed = roundCurrency(loans.reduce((sum, l) => sum + l.loanAmount, 0));
@@ -166,149 +187,67 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return `INK-C-${maxNum + 1}`;
   };
 
-  const addClient = (params: AddClientParams) => {
-    const trimmedNumber = params.clientNumber.trim().toUpperCase();
-    const trimmedName = params.fullName.trim();
+  const addClient = async (params: AddClientParams) => {
+    try {
+      const response = await fetch('/api/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
 
-    if (!trimmedNumber) {
-      return { success: false, error: 'Client Number is required.' };
+      if (!response.ok) {
+        const errorData = await response.json();
+        return { success: false, error: errorData.error || 'Failed to create client' };
+      }
+
+      const newClient = await response.json();
+      await fetchData();
+      return { success: true, client: transformClient(newClient) };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Failed to create client' };
     }
-    if (!trimmedName) {
-      return { success: false, error: 'Full Name is required.' };
-    }
-
-    const exists = clients.some(
-      (c) => c.clientNumber.toUpperCase() === trimmedNumber
-    );
-    if (exists) {
-      return { success: false, error: `Client number "${trimmedNumber}" is already registered.` };
-    }
-
-    const newClient: Client = {
-      id: `cli-${Date.now()}`,
-      clientNumber: trimmedNumber,
-      fullName: trimmedName,
-      phone: params.phone?.trim() || undefined,
-      email: params.email?.trim() || undefined,
-      location: params.location?.trim() || 'Nairobi Central',
-      dateRegistered: new Date().toISOString().split('T')[0],
-      notes: params.notes?.trim() || undefined,
-    };
-
-    setClients((prev) => [newClient, ...prev]);
-    return { success: true, client: newClient };
   };
 
-  const addLoan = (params: AddLoanParams) => {
-    const client = clients.find((c) => c.id === params.clientId);
-    if (!client) {
-      return { success: false, error: 'Selected client does not exist.' };
+  const addLoan = async (params: AddLoanParams) => {
+    try {
+      const response = await fetch('/api/loans', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return { success: false, error: errorData.error || 'Failed to create loan' };
+      }
+
+      const newLoan = await response.json();
+      await fetchData();
+      return { success: true, loan: transformLoan(newLoan) };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Failed to create loan' };
     }
-
-    const principal = roundCurrency(Number(params.loanAmount));
-    const totalDue = roundCurrency(Number(params.totalAmountDue));
-
-    if (isNaN(principal) || principal <= 0) {
-      return { success: false, error: 'Loan principal amount must be greater than KES 0.00.' };
-    }
-    if (isNaN(totalDue) || totalDue < principal) {
-      return { success: false, error: 'Total amount due cannot be less than the loan principal amount.' };
-    }
-
-    const loanRef = getNextLoanReference();
-    const newLoan: Loan = {
-      id: `loan-${Date.now()}`,
-      loanReference: loanRef,
-      clientId: client.id,
-      clientName: client.fullName,
-      clientNumber: client.clientNumber,
-      loanAmount: principal,
-      totalAmountDue: totalDue,
-      totalRepaid: 0,
-      outstandingBalance: totalDue,
-      loanDate: new Date().toISOString().split('T')[0],
-      dueDate: params.dueDate || undefined,
-      purpose: params.purpose?.trim() || 'Micro-enterprise operational capital',
-      status: 'Outstanding',
-    };
-
-    setLoans((prev) => [newLoan, ...prev]);
-    return { success: true, loan: newLoan };
   };
 
-  const recordRepayment = (params: RecordRepaymentParams) => {
-    const targetLoan = loans.find((l) => l.id === params.loanId);
-    if (!targetLoan) {
-      return { success: false, error: 'Selected loan record was not found.' };
+  const recordRepayment = async (params: RecordRepaymentParams) => {
+    try {
+      const response = await fetch('/api/repayments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return { success: false, error: errorData.error || 'Failed to record repayment' };
+      }
+
+      const newRepayment = await response.json();
+      await fetchData();
+      return { success: true, repayment: transformRepayment(newRepayment) };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Failed to record repayment' };
     }
-
-    const repaymentAmount = roundCurrency(Number(params.amount));
-    if (isNaN(repaymentAmount) || repaymentAmount <= 0) {
-      return { success: false, error: 'Repayment amount must be strictly greater than KES 0.00.' };
-    }
-
-    if (repaymentAmount > targetLoan.outstandingBalance + 0.001) {
-      return {
-        success: false,
-        error: `Repayment amount cannot exceed the current outstanding balance of KES ${targetLoan.outstandingBalance.toLocaleString('en-KE', { minimumFractionDigits: 2 })}.`,
-      };
-    }
-
-    const cleanRef = params.paymentReference.trim().toUpperCase();
-    if (!cleanRef) {
-      return { success: false, error: 'Payment reference / transaction code is required.' };
-    }
-
-    const refExists = repayments.some(
-      (r) => r.paymentReference.toUpperCase() === cleanRef
-    );
-    if (refExists) {
-      return { success: false, error: `Payment reference "${cleanRef}" has already been recorded.` };
-    }
-
-    if (!params.paymentDate) {
-      return { success: false, error: 'Payment date is required.' };
-    }
-
-    const newTotalRepaid = roundCurrency(targetLoan.totalRepaid + repaymentAmount);
-    const newOutstanding = roundCurrency(Math.max(0, targetLoan.totalAmountDue - newTotalRepaid));
-    const newStatus = deriveLoanStatus(targetLoan.totalAmountDue, newTotalRepaid);
-
-    const now = new Date();
-    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-    const newRepayment: Repayment = {
-      id: `rep-${Date.now()}`,
-      paymentReference: cleanRef,
-      loanId: targetLoan.id,
-      loanReference: targetLoan.loanReference,
-      clientId: targetLoan.clientId,
-      clientName: targetLoan.clientName,
-      paymentDate: params.paymentDate,
-      amount: repaymentAmount,
-      dateRecorded: `${params.paymentDate} ${timeStr}`,
-      paymentMethod: params.paymentMethod || 'M-Pesa',
-      notes: params.notes?.trim() || undefined,
-    };
-
-    // Update loan atomically
-    setLoans((prev) =>
-      prev.map((l) =>
-        l.id === targetLoan.id
-          ? {
-              ...l,
-              totalRepaid: newTotalRepaid,
-              outstandingBalance: newOutstanding,
-              status: newStatus,
-            }
-          : l
-      )
-    );
-
-    // Append repayment
-    setRepayments((prev) => [newRepayment, ...prev]);
-
-    return { success: true, repayment: newRepayment };
   };
 
   const getClientById = (id: string) => {
@@ -327,15 +266,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return repayments.filter((r) => r.loanId === loanId);
   };
 
-  const resetToSeedData = () => {
-    setClients(INITIAL_CLIENTS);
-    setLoans(getInitialLoans());
-    setRepayments(INITIAL_REPAYMENTS);
-    localStorage.removeItem(STORAGE_KEYS.CLIENTS);
-    localStorage.removeItem(STORAGE_KEYS.LOANS);
-    localStorage.removeItem(STORAGE_KEYS.REPAYMENTS);
-  };
-
   return (
     <StoreContext.Provider
       value={{
@@ -348,6 +278,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         totalDisbursed,
         totalRepaidAll,
         totalOutstandingBalance,
+        loading,
+        error,
         addClient,
         addLoan,
         recordRepayment,
@@ -357,7 +289,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         getLoanRepayments,
         getNextLoanReference,
         getNextClientNumber,
-        resetToSeedData,
+        refreshData: fetchData,
       }}
     >
       {children}

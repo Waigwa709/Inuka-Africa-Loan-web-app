@@ -2,39 +2,21 @@ import React, { useState } from 'react';
 import {
   Building2,
   DollarSign,
-  RotateCcw,
-  Shield,
   Save,
-  CheckCircle2,
-  AlertTriangle,
-  Database,
-  Sparkles,
-  ArrowRight,
 } from 'lucide-react';
-import { useStore } from '../../lib/store';
 import { useToast } from '../shared/toast';
-import { useNavigation } from '../../lib/navigation';
 
 export const SettingsView: React.FC = () => {
-  const { resetToSeedData } = useStore();
-  const { success, info } = useToast();
-  const { navigateTo } = useNavigation();
+  const { success } = useToast();
 
   const [institutionName, setInstitutionName] = useState('Inuka Africa Limited');
   const [tagline, setTagline] = useState('Making Growth Possible.');
   const [currencyCode, setCurrencyCode] = useState('KES');
   const [defaultInterestRate, setDefaultInterestRate] = useState('14');
-  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     success('Configuration Updated', 'Microfinance parameters and institutional details saved.');
-  };
-
-  const handleConfirmReset = () => {
-    resetToSeedData();
-    setIsResetConfirmOpen(false);
-    success('Demo Data Restored', 'All clients, loans, and repayment records have been reset to default state.');
   };
 
   return (
@@ -131,86 +113,6 @@ export const SettingsView: React.FC = () => {
           </button>
         </div>
       </form>
-
-      {/* MYSQL DATABASE & PRISMA ORM ARCHITECTURE */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-[#287A46]" />
-            <div>
-              <h2 className="text-sm font-bold text-[#17231F]">MySQL Database & Prisma ORM</h2>
-              <p className="text-xs text-[#718078]">Enterprise relational data models and decimal monetary precision</p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => navigateTo('database-schema')}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded-lg transition-colors cursor-pointer"
-          >
-            <span>View Full Schema DDL</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[#718078] block text-[10px]">Database Engine</span>
-            <strong className="text-[#17231F]">MySQL 8.0+ (InnoDB)</strong>
-          </div>
-          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[#718078] block text-[10px]">ORM Architecture</span>
-            <strong className="text-[#17231F]">Prisma Client (Type-Safe)</strong>
-          </div>
-          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-            <span className="text-[#718078] block text-[10px]">AI Integration Core</span>
-            <strong className="text-[#287A46]">Google Gemini 3.8 Flash</strong>
-          </div>
-        </div>
-      </div>
-
-      {/* DEMO DATA RESTORE / RESET CARD */}
-      <div className="bg-white rounded-xl border border-red-200 p-5 shadow-xs space-y-3">
-        <div className="flex items-center gap-2 text-[#E92F2B]">
-          <RotateCcw className="w-4 h-4" />
-          <h2 className="text-sm font-bold text-[#17231F]">Assessment Data Management</h2>
-        </div>
-        <p className="text-xs text-[#718078]">
-          Reset all in-memory and local storage records back to the original Inuka Africa demonstration dataset (12 clients, 12 loans, and 19 repayments).
-        </p>
-
-        {!isResetConfirmOpen ? (
-          <button
-            type="button"
-            onClick={() => setIsResetConfirmOpen(true)}
-            className="px-3 py-2 text-xs font-semibold text-[#E92F2B] hover:text-white bg-red-50 hover:bg-[#E92F2B] border border-red-200 rounded-lg transition-colors cursor-pointer"
-          >
-            Reset All Records to Default Demo State
-          </button>
-        ) : (
-          <div className="p-3 bg-red-50 rounded-lg border border-red-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 text-red-800">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
-              <span>Are you sure? Any loans or repayments you added in this session will be reverted.</span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => setIsResetConfirmOpen(false)}
-                className="px-2.5 py-1 text-xs text-slate-700 bg-white rounded border border-slate-300 hover:bg-slate-50 cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleConfirmReset}
-                className="px-2.5 py-1 text-xs font-semibold text-white bg-[#E92F2B] hover:bg-red-700 rounded cursor-pointer"
-              >
-                Confirm Reset
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 };

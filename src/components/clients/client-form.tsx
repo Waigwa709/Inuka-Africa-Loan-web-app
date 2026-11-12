@@ -52,12 +52,12 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    const res = addClient({
+    const res = await addClient({
       clientNumber,
       fullName,
       phone: phone.trim() !== '+254' ? phone.trim() : undefined,

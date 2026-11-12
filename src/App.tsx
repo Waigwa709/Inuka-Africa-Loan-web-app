@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { StoreProvider } from './lib/store';
 import { NavigationProvider, useNavigation } from './lib/navigation';
 import { ToastProvider } from './components/shared/toast';
+import { AuthProvider, useAuth } from './lib/auth';
 import { AppSidebar } from './components/layout/app-sidebar';
 import { MobileSidebar } from './components/layout/mobile-sidebar';
 import { AppHeader } from './components/layout/app-header';
@@ -22,10 +23,13 @@ import { SettingsView } from './components/settings/settings-view';
 import { AIChatAssistant } from './components/ai/ai-chat-assistant';
 import { AIReportGenerator } from './components/ai/ai-report-generator';
 import { RiskMonitoringDashboard } from './components/ai/risk-monitoring-dashboard';
-import { DatabaseSchemaView } from './components/database/database-schema-view';
 import { ClientFormModal } from './components/clients/client-form';
 import { LoanFormModal } from './components/loans/loan-form';
 import { RepaymentFormModal } from './components/repayments/repayment-form';
+import { LoginPage } from './components/auth/login-page';
+import { SignupPage } from './components/auth/signup-page';
+import { ForgotPasswordPage } from './components/auth/forgot-password-page';
+import { ProfileEditModal } from './components/auth/profile-edit-modal';
 
 const AppContent: React.FC = () => {
   const {
@@ -43,8 +47,39 @@ const AppContent: React.FC = () => {
     navigateTo,
   } = useNavigation();
 
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [authPage, setAuthPage] = useState<'login' | 'signup' | 'forgot-password'>('login');
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F5F7F6]">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[#287A46]/30 border-t-[#287A46] rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-sm text-[#718078]">Loading Inuka Africa...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show auth pages if not authenticated
+  if (!isAuthenticated) {
+    if (authPage === 'signup') {
+      return <SignupPage onSwitchToLogin={() => setAuthPage('login')} />;
+    }
+    if (authPage === 'forgot-password') {
+      return <ForgotPasswordPage onSwitchToLogin={() => setAuthPage('login')} />;
+    }
+    return (
+      <LoginPage
+        onSwitchToSignup={() => setAuthPage('signup')}
+        onSwitchToForgotPassword={() => setAuthPage('forgot-password')}
+      />
+    );
+  }
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#F5F7F6] text-[#17231F]">
@@ -63,7 +98,10 @@ const AppContent: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Top Header */}
-        <AppHeader onOpenMobileMenu={() => setIsMobileMenuOpen(true)} />
+        <AppHeader
+          onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
+          onOpenProfile={() => setIsProfileModalOpen(true)}
+        />
 
         {/* Viewport Content */}
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -82,7 +120,6 @@ const AppContent: React.FC = () => {
             {currentRoute === 'ai-reports' && <AIReportGenerator />}
             {currentRoute === 'risk-monitor' && <RiskMonitoringDashboard />}
             {currentRoute === 'reports' && <ReportsView />}
-            {currentRoute === 'database-schema' && <DatabaseSchemaView />}
             {currentRoute === 'settings' && <SettingsView />}
           </div>
         </main>
@@ -115,6 +152,11 @@ const AppContent: React.FC = () => {
         }}
       />
 
+      <ProfileEditModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
+
       <QuickSearchModal />
     </div>
   );
@@ -123,11 +165,13 @@ const AppContent: React.FC = () => {
 export default function App() {
   return (
     <ToastProvider>
-      <StoreProvider>
-        <NavigationProvider>
-          <AppContent />
-        </NavigationProvider>
-      </StoreProvider>
+      <AuthProvider>
+        <StoreProvider>
+          <NavigationProvider>
+            <AppContent />
+          </NavigationProvider>
+        </StoreProvider>
+      </AuthProvider>
     </ToastProvider>
   );
 }

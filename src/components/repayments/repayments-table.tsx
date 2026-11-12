@@ -11,11 +11,13 @@ import {
   ChevronRight,
   Filter,
   ExternalLink,
+  FileDown,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { useNavigation } from '../../lib/navigation';
 import { formatKES } from '../../lib/currency';
 import { EmptyState } from '../shared/empty-state';
+import { exportRepaymentsToPDF } from '../../lib/pdf-export';
 import { useToast } from '../shared/toast';
 
 type RepaymentSortField = 'paymentReference' | 'clientName' | 'loanReference' | 'paymentDate' | 'amount' | 'dateRecorded';
@@ -138,6 +140,18 @@ export const RepaymentsTableView: React.FC = () => {
     success('CSV Export Generated', `${sortedRepayments.length} repayment transactions downloaded.`);
   };
 
+  // Export PDF
+  const handleExportPDF = () => {
+    if (sortedRepayments.length === 0) return;
+
+    try {
+      exportRepaymentsToPDF(sortedRepayments);
+      success('PDF Export Generated', `${sortedRepayments.length} repayment transactions exported to PDF.`);
+    } catch (err: any) {
+      console.error('PDF export error:', err);
+    }
+  };
+
   // Distinct loan refs for filter
   const uniqueLoanRefs = useMemo(() => {
     return Array.from(new Set(loans.map((l) => l.loanReference)));
@@ -162,6 +176,15 @@ export const RepaymentsTableView: React.FC = () => {
           >
             <Download className="w-4 h-4 text-slate-500" />
             <span>Export CSV</span>
+          </button>
+
+          <button
+            onClick={handleExportPDF}
+            className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            title="Download PDF report"
+          >
+            <FileDown className="w-4 h-4" />
+            <span>Export PDF</span>
           </button>
 
           <button

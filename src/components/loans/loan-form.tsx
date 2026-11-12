@@ -94,12 +94,12 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    const res = addLoan({
+    const res = await addLoan({
       clientId: selectedClientId,
       loanAmount: numPrincipal,
       totalAmountDue: numTotalDue,
