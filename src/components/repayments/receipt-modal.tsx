@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Download, Printer, FileText } from 'lucide-react';
 import { ReceiptData, generateReceiptPDF, ReceiptPreview } from '../../lib/receipt-generator';
 import { useSettings } from '../../lib/settings';
 import { useToast } from '../shared/toast';
+import { useStore } from '../../lib/store';
 
 interface ReceiptModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ interface ReceiptModalProps {
     loanPurpose: string;
     clientName: string;
     clientNumber: string;
+    loanId: string;
   };
 }
 
@@ -28,9 +30,30 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
 }) => {
   const { settings } = useSettings();
   const { success, error: toastError } = useToast();
+  const { loans, repayments } = useStore();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [paymentHistory, setPaymentHistory] = useState<any[]>([]);
+  const [loanDetails, setLoanDetails] = useState<any>(null);
+
+  useEffect(() => {
+    if (isOpen && repayment.loanId) {
+      // Find loan details
+      const loan = loans.find(l => l.id === repayment.loanId);
+      setLoanDetails(loan);
+      
+      // Get all payments for this loan
+      const loanPayments = repayments
+        .filter(r => r.loanId === repayment.loanId)
+        .sort((a, b) => new Date(a.paymentDate).getTime() - new Date(b.paymentDate).getTime());
+      setPaymentHistory(loanPayments);
+    }
+  }, [isOpen, repayment.loanId, loans, repayments]);
 
   if (!isOpen) return null;
+
+  const totalRepaid = paymentHistory.reduce((sum, p) => sum + p.amount, 0);
+  const outstandingBalance = loanDetails ? Math.max(0, loanDetails.totalAmountDue - totalRepaid) : 0;
+  const totalPayments = paymentHistory.length;
 
   const receiptData: ReceiptData = {
     receiptNumber: `RCP-${repayment.paymentReference}`,
@@ -46,6 +69,16 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
     institutionName: settings.institutionName,
     tagline: settings.tagline,
     currencyCode: settings.currencyCode,
+    totalPayments,
+    paymentHistory: paymentHistory.map(p => ({
+      date: p.paymentDate,
+      amount: p.amount,
+      method: p.paymentMethod || 'M-Pesa',
+      reference: p.paymentReference,
+    })),
+    outstandingBalance,
+    totalLoanAmount: loanDetails?.totalAmountDue || 0,
+    totalRepaid,
   };
 
   const handleDownloadPDF = async () => {

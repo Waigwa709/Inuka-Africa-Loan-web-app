@@ -434,6 +434,7 @@ export const RepaymentsTableView: React.FC = () => {
             loanPurpose: selectedRepayment.loanPurpose || 'Loan repayment',
             clientName: selectedRepayment.clientName,
             clientNumber: selectedRepayment.clientNumber || 'N/A',
+            loanId: selectedRepayment.loanId,
           }}
         />
       )}
