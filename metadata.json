@@ -1,0 +1,6 @@
+{
+  "name": "Inuka Africa - Loan Repayment Tracker",
+  "description": "Professional microfinance loan repayment tracking and portfolio management dashboard for Inuka Africa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
