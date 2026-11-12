@@ -22,16 +22,6 @@ export function formatKES(amount: number | string | null | undefined): string {
 }
 
 /**
- * Format without currency symbol for compact charts or raw numbers
- */
-export function formatNumberKES(amount: number): string {
-  return new Intl.NumberFormat('en-KE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
-
-/**
  * Safe round to 2 decimal places to prevent floating-point discrepancies
  */
 export function roundCurrency(amount: number): number {

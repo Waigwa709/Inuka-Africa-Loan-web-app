@@ -30,7 +30,6 @@ export interface LoanRiskAssessment {
   detectedIndicators: RiskIndicatorRule[];
   attentionCategory: AttentionCategory;
   suggestedAction: string;
-  aiExplanation?: string;
 }
 
 export interface PortfolioRiskSummary {
