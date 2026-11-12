@@ -19,6 +19,10 @@ import { LoanDetailsView } from './components/loans/loan-details';
 import { RepaymentsTableView } from './components/repayments/repayments-table';
 import { ReportsView } from './components/reports/reports-view';
 import { SettingsView } from './components/settings/settings-view';
+import { AIChatAssistant } from './components/ai/ai-chat-assistant';
+import { AIReportGenerator } from './components/ai/ai-report-generator';
+import { RiskMonitoringDashboard } from './components/ai/risk-monitoring-dashboard';
+import { DatabaseSchemaView } from './components/database/database-schema-view';
 import { ClientFormModal } from './components/clients/client-form';
 import { LoanFormModal } from './components/loans/loan-form';
 import { RepaymentFormModal } from './components/repayments/repayment-form';
@@ -74,7 +78,11 @@ const AppContent: React.FC = () => {
               <LoanDetailsView loanId={selectedLoanId} />
             )}
             {currentRoute === 'repayments' && <RepaymentsTableView />}
+            {currentRoute === 'ai-chat' && <AIChatAssistant />}
+            {currentRoute === 'ai-reports' && <AIReportGenerator />}
+            {currentRoute === 'risk-monitor' && <RiskMonitoringDashboard />}
             {currentRoute === 'reports' && <ReportsView />}
+            {currentRoute === 'database-schema' && <DatabaseSchemaView />}
             {currentRoute === 'settings' && <SettingsView />}
           </div>
         </main>

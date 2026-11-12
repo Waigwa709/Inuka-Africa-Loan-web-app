@@ -7,6 +7,7 @@ import {
   PlusCircle,
   ArrowRight,
   ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 import { StatCard } from '../shared/stat-card';
 import { StatusBadge } from '../shared/status-badge';
@@ -42,10 +43,25 @@ export const DashboardView: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={() => navigateTo('ai-chat')}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] border border-[#C6E5CD] rounded-lg transition-colors cursor-pointer shadow-xs"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Assistant</span>
+          </button>
+
+          <button
+            onClick={() => navigateTo('ai-reports')}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-[#E5E7EB] rounded-lg transition-colors cursor-pointer shadow-xs"
+          >
+            <span>AI Reports</span>
+          </button>
+
           <button
             onClick={() => openLoanModal()}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Register New Loan</span>

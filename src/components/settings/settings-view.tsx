@@ -7,13 +7,18 @@ import {
   Save,
   CheckCircle2,
   AlertTriangle,
+  Database,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { useToast } from '../shared/toast';
+import { useNavigation } from '../../lib/navigation';
 
 export const SettingsView: React.FC = () => {
   const { resetToSeedData } = useStore();
   const { success, info } = useToast();
+  const { navigateTo } = useNavigation();
 
   const [institutionName, setInstitutionName] = useState('Inuka Africa Limited');
   const [tagline, setTagline] = useState('Making Growth Possible.');
@@ -126,6 +131,42 @@ export const SettingsView: React.FC = () => {
           </button>
         </div>
       </form>
+
+      {/* MYSQL DATABASE & PRISMA ORM ARCHITECTURE */}
+      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2">
+            <Database className="w-4 h-4 text-[#287A46]" />
+            <div>
+              <h2 className="text-sm font-bold text-[#17231F]">MySQL Database & Prisma ORM</h2>
+              <p className="text-xs text-[#718078]">Enterprise relational data models and decimal monetary precision</p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => navigateTo('database-schema')}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded-lg transition-colors cursor-pointer"
+          >
+            <span>View Full Schema DDL</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[#718078] block text-[10px]">Database Engine</span>
+            <strong className="text-[#17231F]">MySQL 8.0+ (InnoDB)</strong>
+          </div>
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[#718078] block text-[10px]">ORM Architecture</span>
+            <strong className="text-[#17231F]">Prisma Client (Type-Safe)</strong>
+          </div>
+          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <span className="text-[#718078] block text-[10px]">AI Integration Core</span>
+            <strong className="text-[#287A46]">Google Gemini 3.8 Flash</strong>
+          </div>
+        </div>
+      </div>
 
       {/* DEMO DATA RESTORE / RESET CARD */}
       <div className="bg-white rounded-xl border border-red-200 p-5 shadow-xs space-y-3">

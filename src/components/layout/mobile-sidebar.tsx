@@ -8,6 +8,10 @@ import {
   Settings,
   X,
   PlusCircle,
+  Sparkles,
+  FileSpreadsheet,
+  ShieldAlert,
+  Database,
 } from 'lucide-react';
 import { InukaLogo } from './inuka-logo';
 import { useNavigation, AppRoute } from '../../lib/navigation';
@@ -34,8 +38,15 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
     { id: 'repayments' as AppRoute, label: 'Repayments', icon: CreditCard },
   ];
 
+  const navItemsAI = [
+    { id: 'ai-chat' as AppRoute, label: 'AI Financial Assistant', icon: Sparkles },
+    { id: 'ai-reports' as AppRoute, label: 'AI Management Reports', icon: FileSpreadsheet },
+    { id: 'risk-monitor' as AppRoute, label: 'Repayment Risk Monitor', icon: ShieldAlert },
+  ];
+
   const navItemsManagement = [
-    { id: 'reports' as AppRoute, label: 'Reports', icon: BarChart3 },
+    { id: 'reports' as AppRoute, label: 'Portfolio Overview', icon: BarChart3 },
+    { id: 'database-schema' as AppRoute, label: 'MySQL & Prisma Schema', icon: Database },
     { id: 'settings' as AppRoute, label: 'Settings', icon: Settings },
   ];
 
@@ -82,6 +93,33 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                   currentRoute === item.id ||
                   (item.id === 'clients' && currentRoute === 'client-details') ||
                   (item.id === 'loans' && currentRoute === 'loan-details');
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNav(item.id)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
+                      active
+                        ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 ${active ? 'text-[#34D399]' : 'text-slate-400'}`} />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div>
+            <p className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-[#34D399] flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-[#34D399]" />
+              <span>AI Insights</span>
+            </p>
+            <nav className="space-y-1">
+              {navItemsAI.map((item) => {
+                const active = currentRoute === item.id;
                 const Icon = item.icon;
                 return (
                   <button

@@ -10,6 +10,10 @@ import {
   ChevronRight,
   PlusCircle,
   HelpCircle,
+  Sparkles,
+  FileSpreadsheet,
+  ShieldAlert,
+  Database,
 } from 'lucide-react';
 import { InukaLogo } from './inuka-logo';
 import { useNavigation, AppRoute } from '../../lib/navigation';
@@ -38,8 +42,15 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
     { id: 'repayments' as AppRoute, label: 'Repayments', icon: CreditCard },
   ];
 
+  const navItemsAI = [
+    { id: 'ai-chat' as AppRoute, label: 'AI Financial Assistant', icon: Sparkles, badge: 'AI' },
+    { id: 'ai-reports' as AppRoute, label: 'AI Management Reports', icon: FileSpreadsheet, badge: 'AI' },
+    { id: 'risk-monitor' as AppRoute, label: 'Repayment Risk Monitor', icon: ShieldAlert, badge: 'Rule-Based' },
+  ];
+
   const navItemsManagement = [
-    { id: 'reports' as AppRoute, label: 'Reports', icon: BarChart3 },
+    { id: 'reports' as AppRoute, label: 'Portfolio Overview', icon: BarChart3 },
+    { id: 'database-schema' as AppRoute, label: 'MySQL & Prisma Schema', icon: Database },
     { id: 'settings' as AppRoute, label: 'Settings', icon: Settings },
   ];
 
@@ -115,6 +126,48 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                     }`}
                   />
                   {!collapsed && <span className="truncate">{item.label}</span>}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* AI CAPABILITIES & INSIGHTS SECTION */}
+        <div>
+          {!collapsed && (
+            <p className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-[#34D399] flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-[#34D399]" />
+              <span>AI Insights</span>
+            </p>
+          )}
+          <nav className="space-y-1">
+            {navItemsAI.map((item) => {
+              const active = currentRoute === item.id;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => navigateTo(item.id)}
+                  title={collapsed ? item.label : undefined}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
+                    active
+                      ? 'bg-[#287A46]/25 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                  } ${collapsed ? 'justify-center px-0' : ''}`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 ${
+                        active ? 'text-[#34D399]' : 'text-slate-400'
+                      }`}
+                    />
+                    {!collapsed && <span className="truncate">{item.label}</span>}
+                  </div>
+                  {!collapsed && item.badge && (
+                    <span className="text-[9px] font-mono font-semibold px-1.5 py-0.2 rounded bg-white/10 text-slate-300 border border-white/10">
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
               );
             })}

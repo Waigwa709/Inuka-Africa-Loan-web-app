@@ -11,10 +11,13 @@ import {
   CheckCircle2,
   AlertCircle,
   FileCheck,
+  Sparkles,
+  ShieldAlert,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { useNavigation } from '../../lib/navigation';
 import { formatKES } from '../../lib/currency';
+import { assessPortfolioRisk } from '../../lib/analytics/risk-analysis';
 import { StatCard } from '../shared/stat-card';
 import { StatusBadge } from '../shared/status-badge';
 import { RepaymentProgress } from './repayment-progress';
@@ -128,6 +131,53 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
           <span>Terms: <strong>6 Months Micro-Installments</strong></span>
         </div>
       </div>
+
+      {/* Repayment Risk & Early Warning Banner */}
+      {(() => {
+        const riskAssessment = assessPortfolioRisk([loan], repayments).assessments[0];
+        if (!riskAssessment || isCompleted) return null;
+
+        const isHigh = riskAssessment.attentionCategory === 'High Attention';
+        const isMed = riskAssessment.attentionCategory === 'Medium Attention';
+
+        return (
+          <div
+            className={`p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs ${
+              isHigh
+                ? 'bg-red-50/70 border-red-200 text-red-900'
+                : isMed
+                ? 'bg-amber-50/70 border-amber-200 text-amber-900'
+                : 'bg-[#E7F3EA]/50 border-[#C6E5CD] text-[#17231F]'
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              <ShieldAlert
+                className={`w-4 h-4 mt-0.5 shrink-0 ${
+                  isHigh ? 'text-[#E92F2B]' : isMed ? 'text-[#D99A30]' : 'text-[#287A46]'
+                }`}
+              />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">Operational Status: {riskAssessment.attentionCategory}</span>
+                  {riskAssessment.detectedIndicators.map((ind, i) => (
+                    <span key={i} className="text-[10px] px-1.5 py-0.2 rounded bg-white/60 font-medium">
+                      {ind.label}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-0.5 text-[11px] opacity-90">{riskAssessment.suggestedAction}</p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => navigateTo('risk-monitor')}
+              className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors cursor-pointer text-slate-800"
+            >
+              Analyze in Risk Monitor
+            </button>
+          </div>
+        );
+      })()}
 
       {/* FINANCIAL SUMMARY — 4 FINANCIAL CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

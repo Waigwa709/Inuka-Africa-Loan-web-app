@@ -60,8 +60,20 @@ export const Breadcrumbs: React.FC = () => {
           {currentRoute === 'repayments' && (
             <span className="font-semibold text-[#17231F]">Repayments</span>
           )}
+          {currentRoute === 'ai-chat' && (
+            <span className="font-semibold text-[#17231F]">AI Financial Assistant</span>
+          )}
+          {currentRoute === 'ai-reports' && (
+            <span className="font-semibold text-[#17231F]">AI Management Reports</span>
+          )}
+          {currentRoute === 'risk-monitor' && (
+            <span className="font-semibold text-[#17231F]">Repayment Risk Monitor</span>
+          )}
           {currentRoute === 'reports' && (
             <span className="font-semibold text-[#17231F]">Portfolio Reports</span>
+          )}
+          {currentRoute === 'database-schema' && (
+            <span className="font-semibold text-[#17231F]">MySQL & Prisma Schema</span>
           )}
           {currentRoute === 'settings' && (
             <span className="font-semibold text-[#17231F]">System Settings</span>
