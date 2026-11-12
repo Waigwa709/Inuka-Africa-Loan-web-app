@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ArrowLeft,
   FilePlus2,
@@ -12,23 +12,31 @@ import {
   Clock,
   ArrowRight,
   ExternalLink,
+  Receipt,
+  Download,
+  Eye,
+  Printer,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { useNavigation } from '../../lib/navigation';
 import { formatKES } from '../../lib/currency';
 import { StatCard } from '../shared/stat-card';
 import { StatusBadge } from '../shared/status-badge';
+import { ReceiptModal } from '../repayments/receipt-modal';
 
 interface ClientDetailsProps {
   clientId: string;
 }
 
 export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) => {
-  const { getClientById, getClientLoans } = useStore();
+  const { getClientById, getClientLoans, repayments } = useStore();
   const { navigateTo, openLoanModal, openRepaymentModal } = useNavigation();
+  const [selectedRepayment, setSelectedRepayment] = useState<any>(null);
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
 
   const client = getClientById(clientId);
   const loans = getClientLoans(clientId);
+  const clientPayments = repayments.filter(r => r.clientId === clientId);
 
   if (!client) {
     return (
@@ -246,6 +254,124 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
           </div>
         )}
       </div>
+
+      {/* CLIENT'S PAYMENT RECEIPTS */}
+      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+          <div>
+            <h2 className="text-sm font-bold text-[#17231F]">Payment Receipts</h2>
+            <p className="text-xs text-[#718078]">
+              All payment receipts and transaction history for this client
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Receipt className="w-4 h-4 text-[#2E7542]" />
+            <span className="text-xs font-semibold text-[#2E7542]">{clientPayments.length} Receipts</span>
+          </div>
+        </div>
+
+        {clientPayments.length === 0 ? (
+          <div className="py-8 text-center text-xs text-[#718078]">
+            No payment receipts found for this client. Receipts will appear here once payments are recorded.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-left">
+              <thead>
+                <tr className="border-b border-slate-100 text-[#718078]">
+                  <th className="py-3 px-3 font-semibold">Receipt #</th>
+                  <th className="py-3 px-3 font-semibold">Loan Ref</th>
+                  <th className="py-3 px-3 font-semibold">Payment Date</th>
+                  <th className="py-3 px-3 font-semibold text-right">Amount</th>
+                  <th className="py-3 px-3 font-semibold">Method</th>
+                  <th className="py-3 px-3 font-semibold text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {clientPayments.map((payment) => (
+                  <tr key={payment.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-3 px-3 font-mono font-medium text-[#2E7542]">
+                      {payment.paymentReference}
+                    </td>
+                    <td className="py-3 px-3 font-mono text-slate-600">
+                      {payment.loanReference}
+                    </td>
+                    <td className="py-3 px-3 text-slate-600">
+                      {new Date(payment.paymentDate).toLocaleDateString('en-KE')}
+                    </td>
+                    <td className="py-3 px-3 text-right font-mono font-semibold text-[#17231F]">
+                      {formatKES(payment.amount)}
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="inline-block px-2 py-0.5 rounded text-[11px] font-medium bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD]">
+                        {payment.paymentMethod || 'M-Pesa'}
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <button
+                          onClick={() => {
+                            setSelectedRepayment(payment);
+                            setIsReceiptModalOpen(true);
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-[#2E7542] hover:bg-[#E7F3EA] rounded transition-colors"
+                          title="View receipt"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedRepayment(payment);
+                            setIsReceiptModalOpen(true);
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-[#2E7542] hover:bg-[#E7F3EA] rounded transition-colors"
+                          title="Download receipt"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedRepayment(payment);
+                            setIsReceiptModalOpen(true);
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-[#2E7542] hover:bg-[#E7F3EA] rounded transition-colors"
+                          title="Print receipt"
+                        >
+                          <Printer className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Receipt Modal */}
+      {selectedRepayment && (
+        <ReceiptModal
+          isOpen={isReceiptModalOpen}
+          onClose={() => {
+            setIsReceiptModalOpen(false);
+            setSelectedRepayment(null);
+          }}
+          repayment={{
+            id: selectedRepayment.id,
+            paymentReference: selectedRepayment.paymentReference,
+            amount: selectedRepayment.amount,
+            paymentDate: selectedRepayment.paymentDate,
+            paymentMethod: selectedRepayment.paymentMethod,
+            notes: selectedRepayment.notes,
+            loanReference: selectedRepayment.loanReference,
+            loanPurpose: selectedRepayment.loanPurpose || 'Loan repayment',
+            clientName: client.fullName,
+            clientNumber: client.clientNumber,
+            loanId: selectedRepayment.loanId,
+          }}
+        />
+      )}
     </div>
   );
 };
