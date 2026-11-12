@@ -4,9 +4,9 @@ import { formatKES } from './currency';
 
 // Brand colors
 const BRAND = {
-  primary: [40, 122, 70] as [number, number, number], // #287A46
+  primary: [40, 122, 70] as [number, number, number], // #2E7542
   primaryDark: [30, 99, 55] as [number, number, number], // #1E6337
-  red: [233, 47, 43] as [number, number, number], // #E92F2B
+  red: [233, 47, 43] as [number, number, number], // #E4332C
   navy: [17, 24, 39] as [number, number, number], // #111827
   muted: [113, 128, 120] as [number, number, number], // #718078
   lightGrey: [245, 247, 246] as [number, number, number], // #F5F7F6

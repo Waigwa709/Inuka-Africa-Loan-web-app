@@ -75,7 +75,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
               onClose();
               openLoanModal();
             }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors shadow-xs"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors shadow-xs"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Register Loan</span>
@@ -98,7 +98,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                     onClick={() => handleNav(item.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                       active
-                        ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                        ? 'bg-[#2E7542]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                     }`}
                   >
@@ -125,7 +125,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                     onClick={() => handleNav(item.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                       active
-                        ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                        ? 'bg-[#2E7542]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                     }`}
                   >
@@ -151,7 +151,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                     onClick={() => handleNav(item.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                       active
-                        ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                        ? 'bg-[#2E7542]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                     }`}
                   >

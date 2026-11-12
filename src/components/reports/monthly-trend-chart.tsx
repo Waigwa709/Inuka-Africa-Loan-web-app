@@ -66,7 +66,7 @@ export const MonthlyTrendChart: React.FC = () => {
           <p className="font-semibold text-[#17231F] mb-2">{label}</p>
           <div className="space-y-1 text-xs">
             <div className="flex justify-between gap-4">
-              <span className="text-[#287A46]">Collected:</span>
+              <span className="text-[#2E7542]">Collected:</span>
               <span className="font-mono font-semibold">{formatKES(data.collected)}</span>
             </div>
             <div className="flex justify-between gap-4">
@@ -75,7 +75,7 @@ export const MonthlyTrendChart: React.FC = () => {
             </div>
             <div className="flex justify-between gap-4 pt-1 border-t border-slate-100">
               <span className="text-[#17231F]">Variance:</span>
-              <span className={`font-mono font-semibold ${data.variance >= 0 ? 'text-[#287A46]' : 'text-[#E92F2B]'}`}>
+              <span className={`font-mono font-semibold ${data.variance >= 0 ? 'text-[#2E7542]' : 'text-[#E4332C]'}`}>
                 {data.variance >= 0 ? '+' : ''}{formatKES(data.variance)}
               </span>
             </div>
@@ -95,7 +95,7 @@ export const MonthlyTrendChart: React.FC = () => {
         </div>
         <div className="flex items-center gap-4 text-xs">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#287A46]" />
+            <div className="w-3 h-3 rounded-full bg-[#2E7542]" />
             <span className="text-[#718078]">Collected</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -132,10 +132,10 @@ export const MonthlyTrendChart: React.FC = () => {
               type="monotone"
               dataKey="collected"
               name="Collected"
-              stroke="#287A46"
+              stroke="#2E7542"
               strokeWidth={2}
-              dot={{ fill: '#287A46', strokeWidth: 2, r: 4 }}
-              activeDot={{ r: 6, stroke: '#287A46', strokeWidth: 2 }}
+              dot={{ fill: '#2E7542', strokeWidth: 2, r: 4 }}
+              activeDot={{ r: 6, stroke: '#2E7542', strokeWidth: 2 }}
             />
             <Line
               type="monotone"

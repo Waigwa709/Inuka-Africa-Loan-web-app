@@ -130,13 +130,13 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB] bg-[#F5F7F6]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#287A46] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#2E7542] flex items-center justify-center">
               <FilePlus2 className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base font-bold text-[#17231F]">Register Loan</h2>
-                <span className="text-xs font-mono font-semibold bg-white border border-[#E5E7EB] text-[#287A46] px-2 py-0.5 rounded">
+                <span className="text-xs font-mono font-semibold bg-white border border-[#E5E7EB] text-[#2E7542] px-2 py-0.5 rounded">
                   {autoRef}
                 </span>
               </div>
@@ -161,7 +161,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                 Section 1: Client Information
               </h3>
               {selectedClient && (
-                <span className="text-xs font-semibold text-[#287A46]">
+                <span className="text-xs font-semibold text-[#2E7542]">
                   {selectedClient.clientNumber}
                 </span>
               )}
@@ -169,7 +169,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                Select Client <span className="text-[#E92F2B]">*</span>
+                Select Client <span className="text-[#E4332C]">*</span>
               </label>
 
               {/* Client picker with quick search */}
@@ -179,7 +179,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                   value={clientSearch}
                   onChange={(e) => setClientSearch(e.target.value)}
                   placeholder="Filter client list by name or number..."
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
                 />
 
                 <select
@@ -189,7 +189,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                     if (errors.clientId) setErrors((prev) => ({ ...prev, clientId: '' }));
                   }}
                   className={`w-full px-3 py-2 text-sm rounded-lg border bg-white ${
-                    errors.clientId ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                    errors.clientId ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                   } focus:outline-hidden`}
                 >
                   <option value="">-- Choose registered client --</option>
@@ -202,7 +202,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
               </div>
 
               {errors.clientId && (
-                <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+                <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                   <AlertCircle className="w-3 h-3 shrink-0" />
                   {errors.clientId}
                 </p>
@@ -216,7 +216,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                     <span className="text-[#718078] ml-2">({selectedClient.clientNumber})</span>
                     <p className="text-[11px] text-[#718078] mt-0.5">{selectedClient.location} · {selectedClient.phone || 'No phone'}</p>
                   </div>
-                  <div className="flex items-center gap-1 text-[#287A46] font-medium text-[11px]">
+                  <div className="flex items-center gap-1 text-[#2E7542] font-medium text-[11px]">
                     <Check className="w-3.5 h-3.5" />
                     <span>Client verified</span>
                   </div>
@@ -236,7 +236,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                  Loan Principal Amount (KES) <span className="text-[#E92F2B]">*</span>
+                  Loan Principal Amount (KES) <span className="text-[#E4332C]">*</span>
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2 text-xs font-mono font-medium text-slate-400">
@@ -249,13 +249,13 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                     value={loanAmount}
                     onChange={(e) => handlePrincipalChange(e.target.value)}
                     className={`w-full pl-12 pr-3 py-2 text-sm rounded-lg border font-mono ${
-                      errors.loanAmount ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                      errors.loanAmount ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                     } focus:outline-hidden`}
                     placeholder="200000"
                   />
                 </div>
                 {errors.loanAmount && (
-                  <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+                  <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                     <AlertCircle className="w-3 h-3 shrink-0" />
                     {errors.loanAmount}
                   </p>
@@ -264,7 +264,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
 
               <div>
                 <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                  Total Amount Due (KES) <span className="text-[#E92F2B]">*</span>
+                  Total Amount Due (KES) <span className="text-[#E4332C]">*</span>
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2 text-xs font-mono font-medium text-slate-400">
@@ -280,13 +280,13 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                       if (errors.totalAmountDue) setErrors((prev) => ({ ...prev, totalAmountDue: '' }));
                     }}
                     className={`w-full pl-12 pr-3 py-2 text-sm rounded-lg border font-mono ${
-                      errors.totalAmountDue ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                      errors.totalAmountDue ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                     } focus:outline-hidden`}
                     placeholder="228000"
                   />
                 </div>
                 {errors.totalAmountDue && (
-                  <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+                  <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                     <AlertCircle className="w-3 h-3 shrink-0" />
                     {errors.totalAmountDue}
                   </p>
@@ -297,7 +297,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
             {/* Read-Only Difference Box (Required by specification) */}
             <div className="p-3.5 bg-[#F5F7F6] rounded-lg border border-[#E5E7EB] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Calculator className="w-4 h-4 text-[#287A46]" />
+                <Calculator className="w-4 h-4 text-[#2E7542]" />
                 <div>
                   <span className="text-xs font-semibold text-[#17231F]">
                     Interest & Institutional Margin:
@@ -308,7 +308,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-sm font-bold font-mono text-[#287A46]">
+                <div className="text-sm font-bold font-mono text-[#2E7542]">
                   {formatKES(difference)}
                 </div>
                 <div className="text-[10px] text-[#718078] font-mono">
@@ -327,7 +327,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
                 />
               </div>
 
@@ -339,7 +339,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
                   type="text"
                   value={purpose}
                   onChange={(e) => setPurpose(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
                   placeholder="e.g. Agricultural fertilizer inventory"
                 />
               </div>
@@ -348,7 +348,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
 
           {/* Validation note */}
           <div className="flex items-start gap-2 text-xs text-[#718078] bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-            <Info className="w-3.5 h-3.5 text-[#287A46] shrink-0 mt-0.5" />
+            <Info className="w-3.5 h-3.5 text-[#2E7542] shrink-0 mt-0.5" />
             <span>
               Initial loan status will be automatically marked as <strong>Outstanding</strong> with KES 0.00 repaid.
             </span>
@@ -367,7 +367,7 @@ export const LoanFormModal: React.FC<LoanFormModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50"
             >
               {isSubmitting ? 'Creating...' : 'Create Loan'}
             </button>

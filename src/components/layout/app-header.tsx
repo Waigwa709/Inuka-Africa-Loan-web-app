@@ -97,21 +97,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenPr
             aria-label="View notifications"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#E92F2B] rounded-full" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#E4332C] rounded-full" />
           </button>
 
           {isNotifOpen && (
             <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-[#E5E7EB] py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="px-4 py-2 border-b border-slate-100 flex items-center justify-between">
                 <span className="text-xs font-semibold text-[#17231F]">Notifications</span>
-                <span className="text-[10px] text-[#287A46] font-medium bg-[#E7F3EA] px-2 py-0.5 rounded-full">
+                <span className="text-[10px] text-[#2E7542] font-medium bg-[#E7F3EA] px-2 py-0.5 rounded-full">
                   2 unread
                 </span>
               </div>
               <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto">
                 <div className="p-3 hover:bg-slate-50 transition-colors">
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 mt-1.5 rounded-full bg-[#287A46] shrink-0" />
+                    <span className="w-2 h-2 mt-1.5 rounded-full bg-[#2E7542] shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-[#17231F]">
                         Repayment recorded: Grace Wanjiru
@@ -144,7 +144,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenPr
                     setIsNotifOpen(false);
                     info('Notifications marked as read');
                   }}
-                  className="text-xs text-[#287A46] font-medium hover:underline cursor-pointer"
+                  className="text-xs text-[#2E7542] font-medium hover:underline cursor-pointer"
                 >
                   Mark all as read
                 </button>
@@ -161,7 +161,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenPr
             aria-expanded={isUserMenuOpen}
             aria-haspopup="true"
           >
-            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0 bg-[#287A46] flex items-center justify-center text-white text-xs font-bold">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0 bg-[#2E7542] flex items-center justify-center text-white text-xs font-bold">
               {user ? getInitials(user.fullName) : 'OA'}
             </div>
 
@@ -182,7 +182,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenPr
               <div className="px-4 py-2.5 border-b border-slate-100">
                 <p className="text-xs font-bold text-[#17231F]">{user?.fullName || 'Operations Admin'}</p>
                 <p className="text-[11px] text-[#718078] truncate">{user?.email || 'admin.ops@inukaafrica.com'}</p>
-                <div className="mt-1 flex items-center gap-1 text-[10px] text-[#287A46] font-medium">
+                <div className="mt-1 flex items-center gap-1 text-[10px] text-[#2E7542] font-medium">
                   <ShieldCheck className="w-3 h-3" />
                   <span>Verified Staff Role</span>
                 </div>
@@ -218,16 +218,16 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onOpenMobileMenu, onOpenPr
                 >
                   <Building2 className="w-3.5 h-3.5 text-slate-400" />
                   <span>Nairobi Head Office</span>
-                  <Check className="w-3 h-3 text-[#287A46] ml-auto" />
+                  <Check className="w-3 h-3 text-[#2E7542] ml-auto" />
                 </button>
               </div>
 
               <div className="border-t border-slate-100 pt-1">
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#E92F2B] hover:bg-red-50 transition-colors cursor-pointer text-left"
+                  className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#E4332C] hover:bg-red-50 transition-colors cursor-pointer text-left"
                 >
-                  <LogOut className="w-3.5 h-3.5 text-[#E92F2B]" />
+                  <LogOut className="w-3.5 h-3.5 text-[#E4332C]" />
                   <span>Sign Out</span>
                 </button>
               </div>

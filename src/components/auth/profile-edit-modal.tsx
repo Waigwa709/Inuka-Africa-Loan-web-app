@@ -87,7 +87,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB] bg-[#F5F7F6]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#287A46] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#2E7542] flex items-center justify-center">
               <User className="w-4 h-4" />
             </div>
             <div>
@@ -109,12 +109,12 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
           {/* Avatar Preview */}
           <div className="flex flex-col items-center mb-6">
             <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-[#287A46] flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-20 h-20 rounded-full bg-[#2E7542] flex items-center justify-center text-white text-2xl font-bold">
                 {getInitials(formData.fullName)}
               </div>
               <button
                 type="button"
-                className="absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full border-2 border-[#E5E7EB] flex items-center justify-center text-[#718078] hover:text-[#287A46] hover:border-[#287A46] transition-colors"
+                className="absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full border-2 border-[#E5E7EB] flex items-center justify-center text-[#718078] hover:text-[#2E7542] hover:border-[#2E7542] transition-colors"
               >
                 <Camera className="w-4 h-4" />
               </button>
@@ -134,13 +134,13 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
                 value={formData.fullName}
                 onChange={(e) => updateField('fullName', e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  errors.fullName ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                  errors.fullName ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                 placeholder="John Doe"
               />
             </div>
             {errors.fullName && (
-              <p className="mt-1 text-xs text-[#E92F2B]">{errors.fullName}</p>
+              <p className="mt-1 text-xs text-[#E4332C]">{errors.fullName}</p>
             )}
           </div>
 
@@ -156,13 +156,13 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
                 value={formData.email}
                 onChange={(e) => updateField('email', e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  errors.email ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                  errors.email ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                 placeholder="you@example.com"
               />
             </div>
             {errors.email && (
-              <p className="mt-1 text-xs text-[#E92F2B]">{errors.email}</p>
+              <p className="mt-1 text-xs text-[#E4332C]">{errors.email}</p>
             )}
           </div>
 
@@ -177,7 +177,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => updateField('phone', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all"
                 placeholder="+254 700 000 000"
               />
             </div>
@@ -220,7 +220,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ isOpen, onCl
             <button
               type="submit"
               disabled={isLoading}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50"
             >
               {isLoading ? (
                 <>

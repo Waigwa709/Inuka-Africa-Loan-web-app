@@ -81,7 +81,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
         {!collapsed ? (
           <button
             onClick={() => openLoanModal()}
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Register Loan</span>
@@ -90,7 +90,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
           <button
             onClick={() => openLoanModal()}
             title="Register Loan"
-            className="w-full flex items-center justify-center p-2 text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center p-2 text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer"
           >
             <PlusCircle className="w-4 h-4" />
           </button>
@@ -114,7 +114,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                   title={collapsed ? item.label : undefined}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                     active
-                      ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                      ? 'bg-[#2E7542]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   } ${collapsed ? 'justify-center px-0' : ''}`}
                 >
@@ -149,7 +149,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                   title={collapsed ? item.label : undefined}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                     active
-                      ? 'bg-[#287A46]/25 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                      ? 'bg-[#2E7542]/25 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   } ${collapsed ? 'justify-center px-0' : ''}`}
                 >
@@ -190,7 +190,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                   title={collapsed ? item.label : undefined}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                     active
-                      ? 'bg-[#287A46]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
+                      ? 'bg-[#2E7542]/20 text-[#34D399] font-semibold border-l-2 border-[#34D399]'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   } ${collapsed ? 'justify-center px-0' : ''}`}
                 >

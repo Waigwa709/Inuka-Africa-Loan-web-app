@@ -40,7 +40,7 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
         <p className="text-xs text-[#718078] mt-1">The requested loan facility does not exist or has been modified.</p>
         <button
           onClick={() => navigateTo('loans')}
-          className="mt-4 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] rounded-lg"
+          className="mt-4 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] rounded-lg"
         >
           Return to Loans
         </button>
@@ -73,9 +73,9 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
             <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-[#718078]">
               <button
                 onClick={() => navigateTo('client-details', { clientId: loan.clientId })}
-                className="flex items-center gap-1 font-semibold text-[#17231F] hover:text-[#287A46] hover:underline cursor-pointer"
+                className="flex items-center gap-1 font-semibold text-[#17231F] hover:text-[#2E7542] hover:underline cursor-pointer"
               >
-                <User className="w-3.5 h-3.5 text-[#287A46]" />
+                <User className="w-3.5 h-3.5 text-[#2E7542]" />
                 <span>{loan.clientName}</span>
                 <span className="font-mono text-[11px] text-[#718078]">({loan.clientNumber})</span>
               </button>
@@ -102,13 +102,13 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
           {!isCompleted ? (
             <button
               onClick={() => openRepaymentModal(loan.id)}
-              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
             >
               <CreditCard className="w-4 h-4" />
               <span>Record Repayment</span>
             </button>
           ) : (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E7F3EA] text-[#287A46] text-xs font-semibold border border-[#C6E5CD]">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E7F3EA] text-[#2E7542] text-xs font-semibold border border-[#C6E5CD]">
               <CheckCircle2 className="w-4 h-4" />
               <span>Facility Fully Settled</span>
             </div>
@@ -119,7 +119,7 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
       {/* Purpose & Operational Banner */}
       <div className="p-4 bg-white rounded-xl border border-[#E5E7EB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2.5">
-          <FileCheck className="w-4 h-4 text-[#287A46] shrink-0" />
+          <FileCheck className="w-4 h-4 text-[#2E7542] shrink-0" />
           <div>
             <span className="text-[#718078] block text-[11px]">Approved Credit Purpose:</span>
             <span className="font-medium text-[#17231F]">{loan.purpose || 'Working Capital'}</span>
@@ -153,7 +153,7 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
             <div className="flex items-start gap-2.5">
               <ShieldAlert
                 className={`w-4 h-4 mt-0.5 shrink-0 ${
-                  isHigh ? 'text-[#E92F2B]' : isMed ? 'text-[#D99A30]' : 'text-[#287A46]'
+                  isHigh ? 'text-[#E4332C]' : isMed ? 'text-[#D99A30]' : 'text-[#2E7542]'
                 }`}
               />
               <div>
@@ -230,7 +230,7 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
           {!isCompleted && (
             <button
               onClick={() => openRepaymentModal(loan.id)}
-              className="text-xs font-semibold text-[#287A46] hover:underline cursor-pointer"
+              className="text-xs font-semibold text-[#2E7542] hover:underline cursor-pointer"
             >
               + Record Repayment
             </button>
@@ -260,7 +260,7 @@ export const LoanDetailsView: React.FC<LoanDetailsProps> = ({ loanId }) => {
               <tbody className="divide-y divide-slate-100">
                 {repayments.map((rep) => (
                   <tr key={rep.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3 px-3 font-mono font-semibold text-[#287A46]">
+                    <td className="py-3 px-3 font-mono font-semibold text-[#2E7542]">
                       {rep.paymentReference}
                     </td>
                     <td className="py-3 px-3 text-slate-600">

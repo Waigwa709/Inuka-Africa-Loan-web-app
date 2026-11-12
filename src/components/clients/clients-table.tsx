@@ -98,9 +98,9 @@ export const ClientsTableView: React.FC = () => {
       return <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 opacity-60 ml-1 inline" />;
     }
     return sortOrder === 'asc' ? (
-      <ArrowUp className="w-3.5 h-3.5 text-[#287A46] ml-1 inline" />
+      <ArrowUp className="w-3.5 h-3.5 text-[#2E7542] ml-1 inline" />
     ) : (
-      <ArrowDown className="w-3.5 h-3.5 text-[#287A46] ml-1 inline" />
+      <ArrowDown className="w-3.5 h-3.5 text-[#2E7542] ml-1 inline" />
     );
   };
 
@@ -117,7 +117,7 @@ export const ClientsTableView: React.FC = () => {
 
         <button
           onClick={openClientModal}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
+          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Register Client</span>
@@ -137,7 +137,7 @@ export const ClientsTableView: React.FC = () => {
               setCurrentPage(1);
             }}
             placeholder="Search by client number or name..."
-            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           />
         </div>
 
@@ -150,7 +150,7 @@ export const ClientsTableView: React.FC = () => {
               setLocationFilter(e.target.value);
               setCurrentPage(1);
             }}
-            className="px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           >
             <option value="all">All Locations</option>
             {uniqueLocations.map((loc) => (
@@ -170,7 +170,7 @@ export const ClientsTableView: React.FC = () => {
               setPageSize(Number(e.target.value));
               setCurrentPage(1);
             }}
-            className="px-2 py-1.5 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="px-2 py-1.5 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           >
             <option value={5}>5 per page</option>
             <option value={10}>10 per page</option>
@@ -252,10 +252,10 @@ export const ClientsTableView: React.FC = () => {
                     className="hover:bg-[#F5F7F6]/60 transition-colors group cursor-pointer"
                     onClick={() => navigateTo('client-details', { clientId: client.id })}
                   >
-                    <td className="py-3.5 px-4 font-mono font-medium text-[#287A46] whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono font-medium text-[#2E7542] whitespace-nowrap">
                       {client.clientNumber}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-[#17231F] whitespace-nowrap group-hover:text-[#287A46]">
+                    <td className="py-3.5 px-4 font-semibold text-[#17231F] whitespace-nowrap group-hover:text-[#2E7542]">
                       {client.fullName}
                       {client.location && (
                         <span className="block text-[11px] font-normal text-[#718078]">
@@ -273,8 +273,8 @@ export const ClientsTableView: React.FC = () => {
                       <span
                         className={
                           client.outstandingBalance > 0
-                            ? 'text-[#E92F2B]'
-                            : 'text-[#287A46]'
+                            ? 'text-[#E4332C]'
+                            : 'text-[#2E7542]'
                         }
                       >
                         {formatKES(client.outstandingBalance)}
@@ -290,14 +290,14 @@ export const ClientsTableView: React.FC = () => {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => navigateTo('client-details', { clientId: client.id })}
-                          className="p-1.5 text-slate-500 hover:text-[#287A46] hover:bg-[#E7F3EA] rounded-md transition-colors cursor-pointer"
+                          className="p-1.5 text-slate-500 hover:text-[#2E7542] hover:bg-[#E7F3EA] rounded-md transition-colors cursor-pointer"
                           title="View Client Details"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => openLoanModal(client.id)}
-                          className="p-1.5 text-slate-500 hover:text-[#287A46] hover:bg-[#E7F3EA] rounded-md transition-colors cursor-pointer"
+                          className="p-1.5 text-slate-500 hover:text-[#2E7542] hover:bg-[#E7F3EA] rounded-md transition-colors cursor-pointer"
                           title="Register Loan for this client"
                         >
                           <FilePlus2 className="w-4 h-4" />

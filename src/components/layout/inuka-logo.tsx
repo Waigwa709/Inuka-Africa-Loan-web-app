@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImage from '../../assets/images/Inuka-Africa-logo.png';
 
 interface InukaLogoProps {
   collapsed?: boolean;
@@ -15,26 +16,13 @@ export const InukaLogo: React.FC<InukaLogoProps> = ({
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Geometric Inuka Africa Brand Icon */}
-      <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-[#287A46] to-[#1E6337] flex items-center justify-center shrink-0 shadow-sm border border-white/10">
-        <svg
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5"
-        >
-          {/* Growth leaf & chevron mark */}
-          <path
-            d="M6 22C6 14.268 12.268 8 20 8H26V14C26 21.732 19.732 28 12 28H6V22Z"
-            fill="#FFFFFF"
-            fillOpacity="0.95"
-          />
-          <path
-            d="M13 14C13 10.134 16.134 7 20 7H24V11C24 14.866 20.866 18 17 18H13V14Z"
-            fill="#287A46"
-          />
-          <circle cx="21" cy="11" r="2.5" fill="#E92F2B" />
-        </svg>
+      {/* Inuka Africa Logo Image */}
+      <div className="relative w-9 h-9 rounded-lg overflow-hidden shrink-0 shadow-sm border border-white/10">
+        <img
+          src={logoImage}
+          alt="Inuka Africa Logo"
+          className="w-full h-full object-cover"
+        />
       </div>
 
       {!collapsed && (
@@ -49,7 +37,7 @@ export const InukaLogo: React.FC<InukaLogoProps> = ({
             </span>
             <span
               className={`text-base font-semibold tracking-tight ${
-                isDark ? 'text-[#34D399]' : 'text-[#287A46]'
+                isDark ? 'text-[#34D399]' : 'text-[#2E7542]'
               }`}
             >
               AFRICA

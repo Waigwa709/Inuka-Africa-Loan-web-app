@@ -57,7 +57,7 @@ export const ReportsView: React.FC = () => {
 
         <button
           onClick={handleExportSummary}
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
         >
           <FileDown className="w-4 h-4" />
           <span>Export PDF Report</span>
@@ -100,11 +100,11 @@ export const ReportsView: React.FC = () => {
             <div>
               <div className="flex justify-between text-xs mb-1">
                 <span className="font-medium text-[#17231F]">Fully Paid Facilities</span>
-                <span className="font-mono text-[#287A46] font-semibold">{fullyPaidCount} loans ({loans.length ? ((fullyPaidCount / loans.length) * 100).toFixed(0) : 0}%)</span>
+                <span className="font-mono text-[#2E7542] font-semibold">{fullyPaidCount} loans ({loans.length ? ((fullyPaidCount / loans.length) * 100).toFixed(0) : 0}%)</span>
               </div>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#287A46] rounded-full"
+                  className="h-full bg-[#2E7542] rounded-full"
                   style={{ width: `${loans.length ? (fullyPaidCount / loans.length) * 100 : 0}%` }}
                 />
               </div>
@@ -149,28 +149,28 @@ export const ReportsView: React.FC = () => {
                 <p className="font-semibold text-[#17231F]">Nairobi Central & Gikomba Hub</p>
                 <p className="text-[11px] text-[#718078]">Wholesale textiles, hardware, spare parts</p>
               </div>
-              <span className="font-mono font-semibold text-[#287A46]">55% Portfolio</span>
+              <span className="font-mono font-semibold text-[#2E7542]">55% Portfolio</span>
             </div>
             <div className="py-2.5 flex items-center justify-between">
               <div>
                 <p className="font-semibold text-[#17231F]">Nakuru Central Commercial Branch</p>
                 <p className="text-[11px] text-[#718078]">Agricultural inputs & agro-dealers</p>
               </div>
-              <span className="font-mono font-semibold text-[#287A46]">20% Portfolio</span>
+              <span className="font-mono font-semibold text-[#2E7542]">20% Portfolio</span>
             </div>
             <div className="py-2.5 flex items-center justify-between">
               <div>
                 <p className="font-semibold text-[#17231F]">Kisumu & Lake Region Branch</p>
                 <p className="text-[11px] text-[#718078]">Fisheries and fresh food logistics</p>
               </div>
-              <span className="font-mono font-semibold text-[#287A46]">15% Portfolio</span>
+              <span className="font-mono font-semibold text-[#2E7542]">15% Portfolio</span>
             </div>
             <div className="py-2.5 flex items-center justify-between">
               <div>
                 <p className="font-semibold text-[#17231F]">Eldoret North Rift Hub</p>
                 <p className="text-[11px] text-[#718078]">Dairy aggregation and maize production</p>
               </div>
-              <span className="font-mono font-semibold text-[#287A46]">10% Portfolio</span>
+              <span className="font-mono font-semibold text-[#2E7542]">10% Portfolio</span>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ export const SettingsView: React.FC = () => {
         {/* INSTITUTION DETAILS */}
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-            <Building2 className="w-4 h-4 text-[#287A46]" />
+            <Building2 className="w-4 h-4 text-[#2E7542]" />
             <h2 className="text-sm font-bold text-[#17231F]">Institution Profile</h2>
           </div>
 
@@ -44,7 +44,7 @@ export const SettingsView: React.FC = () => {
                 type="text"
                 value={institutionName}
                 onChange={(e) => setInstitutionName(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               />
             </div>
 
@@ -54,7 +54,7 @@ export const SettingsView: React.FC = () => {
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               />
             </div>
           </div>
@@ -63,7 +63,7 @@ export const SettingsView: React.FC = () => {
         {/* FINANCIAL CONFIGURATION */}
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-            <DollarSign className="w-4 h-4 text-[#287A46]" />
+            <DollarSign className="w-4 h-4 text-[#2E7542]" />
             <h2 className="text-sm font-bold text-[#17231F]">Financial Currency & Interest Standards</h2>
           </div>
 
@@ -92,7 +92,7 @@ export const SettingsView: React.FC = () => {
                   type="number"
                   value={defaultInterestRate}
                   onChange={(e) => setDefaultInterestRate(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
                 />
                 <span className="absolute right-3 top-2 text-slate-400 font-semibold">%</span>
               </div>
@@ -106,7 +106,7 @@ export const SettingsView: React.FC = () => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
           >
             <Save className="w-4 h-4" />
             <span>Save Configuration</span>

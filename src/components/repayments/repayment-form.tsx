@@ -138,7 +138,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB] bg-[#F5F7F6]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#287A46] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#2E7542] flex items-center justify-center">
               <CreditCard className="w-4 h-4" />
             </div>
             <div>
@@ -160,7 +160,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
           {/* Loan Selector (if multiple) */}
           <div>
             <label className="block text-xs font-semibold text-[#17231F] mb-1">
-              Select Loan Facility <span className="text-[#E92F2B]">*</span>
+              Select Loan Facility <span className="text-[#E4332C]">*</span>
             </label>
             <select
               value={selectedLoanId}
@@ -168,7 +168,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
                 setSelectedLoanId(e.target.value);
                 if (errors.loanId) setErrors((prev) => ({ ...prev, loanId: '' }));
               }}
-              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
             >
               {activeLoans.length === 0 ? (
                 <option value="">No active loans with outstanding balance</option>
@@ -181,7 +181,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
               )}
             </select>
             {errors.loanId && (
-              <p className="mt-1 text-xs text-[#E92F2B]">{errors.loanId}</p>
+              <p className="mt-1 text-xs text-[#E4332C]">{errors.loanId}</p>
             )}
           </div>
 
@@ -200,7 +200,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
               </div>
               <div className="flex items-center justify-between text-xs border-t border-slate-200/80 pt-2">
                 <span className="font-semibold text-[#17231F]">Current Outstanding Balance:</span>
-                <span className="font-mono font-bold text-sm text-[#E92F2B]">
+                <span className="font-mono font-bold text-sm text-[#E4332C]">
                   {formatKES(currentLoan.outstandingBalance)}
                 </span>
               </div>
@@ -215,13 +215,13 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-semibold text-[#17231F]">
-                Repayment Amount (KES) <span className="text-[#E92F2B]">*</span>
+                Repayment Amount (KES) <span className="text-[#E4332C]">*</span>
               </label>
               {currentLoan && currentLoan.outstandingBalance > 0 && (
                 <button
                   type="button"
                   onClick={handlePayFull}
-                  className="text-[11px] font-semibold text-[#287A46] hover:underline cursor-pointer"
+                  className="text-[11px] font-semibold text-[#2E7542] hover:underline cursor-pointer"
                 >
                   Pay Full Balance ({formatKES(currentLoan.outstandingBalance)})
                 </button>
@@ -241,13 +241,13 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
                   if (errors.amount) setErrors((prev) => ({ ...prev, amount: '' }));
                 }}
                 className={`w-full pl-12 pr-3 py-2 text-sm rounded-lg border font-mono ${
-                  errors.amount ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                  errors.amount ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                 } focus:outline-hidden`}
                 placeholder="50000"
               />
             </div>
             {errors.amount && (
-              <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+              <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                 <AlertCircle className="w-3 h-3 shrink-0" />
                 {errors.amount}
               </p>
@@ -258,7 +258,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                Payment Reference / M-Pesa ID <span className="text-[#E92F2B]">*</span>
+                Payment Reference / M-Pesa ID <span className="text-[#E4332C]">*</span>
               </label>
               <input
                 type="text"
@@ -268,12 +268,12 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
                   if (errors.paymentReference) setErrors((prev) => ({ ...prev, paymentReference: '' }));
                 }}
                 className={`w-full px-3 py-2 text-sm rounded-lg border font-mono ${
-                  errors.paymentReference ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                  errors.paymentReference ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                 } focus:outline-hidden`}
                 placeholder="e.g. MPX892147K"
               />
               {errors.paymentReference && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.paymentReference}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.paymentReference}</p>
               )}
             </div>
 
@@ -284,7 +284,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value as any)}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               >
                 <option value="M-Pesa">M-Pesa (Paybill 400200)</option>
                 <option value="Bank Transfer">Bank Transfer (RTGS / EFT)</option>
@@ -297,16 +297,16 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                Payment Date <span className="text-[#E92F2B]">*</span>
+                Payment Date <span className="text-[#E4332C]">*</span>
               </label>
               <input
                 type="date"
                 value={paymentDate}
                 onChange={(e) => setPaymentDate(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               />
               {errors.paymentDate && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.paymentDate}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.paymentDate}</p>
               )}
             </div>
 
@@ -319,7 +319,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="e.g. Bi-weekly installment"
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               />
             </div>
           </div>
@@ -327,7 +327,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
           {/* Remaining Balance Projection */}
           {currentLoan && numericAmount > 0 && numericAmount <= currentLoan.outstandingBalance && (
             <div className="p-3 bg-[#E7F3EA]/50 rounded-lg border border-[#C6E5CD] text-xs text-[#17231F] flex items-center justify-between">
-              <span className="text-[#287A46] font-medium flex items-center gap-1.5">
+              <span className="text-[#2E7542] font-medium flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
                 Remaining Balance after this payment:
               </span>
@@ -350,7 +350,7 @@ export const RepaymentFormModal: React.FC<RepaymentFormModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting || !currentLoan}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>{isSubmitting ? 'Recording...' : 'Record Repayment'}</span>

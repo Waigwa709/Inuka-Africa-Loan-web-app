@@ -110,13 +110,13 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                   value={formData.fullName}
                   onChange={(e) => updateField('fullName', e.target.value)}
                   className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                    errors.fullName ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.fullName ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="John Doe"
                 />
               </div>
               {errors.fullName && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.fullName}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.fullName}</p>
               )}
             </div>
 
@@ -132,13 +132,13 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                   value={formData.email}
                   onChange={(e) => updateField('email', e.target.value)}
                   className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                    errors.email ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.email ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="you@example.com"
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.email}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.email}</p>
               )}
             </div>
 
@@ -153,7 +153,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => updateField('phone', e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all"
                   placeholder="+254 700 000 000"
                 />
               </div>
@@ -171,8 +171,8 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                   value={formData.password}
                   onChange={(e) => updateField('password', e.target.value)}
                   className={`w-full pl-10 pr-12 py-3 rounded-lg border ${
-                    errors.password ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.password ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="••••••••"
                 />
                 <button
@@ -184,7 +184,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.password}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.password}</p>
               )}
             </div>
 
@@ -200,8 +200,8 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                   value={formData.confirmPassword}
                   onChange={(e) => updateField('confirmPassword', e.target.value)}
                   className={`w-full pl-10 pr-12 py-3 rounded-lg border ${
-                    errors.confirmPassword ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.confirmPassword ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="••••••••"
                 />
                 <button
@@ -213,7 +213,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.confirmPassword}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.confirmPassword}</p>
               )}
             </div>
 
@@ -222,12 +222,12 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
               <input
                 type="checkbox"
                 id="terms"
-                className="mt-1 w-4 h-4 text-[#287A46] border-[#E5E7EB] rounded focus:ring-[#287A46]"
+                className="mt-1 w-4 h-4 text-[#2E7542] border-[#E5E7EB] rounded focus:ring-[#2E7542]"
                 required
               />
               <label htmlFor="terms" className="text-xs text-[#718078]">
-                I agree to the <span className="text-[#287A46] font-medium">Terms of Service</span> and{' '}
-                <span className="text-[#287A46] font-medium">Privacy Policy</span>
+                I agree to the <span className="text-[#2E7542] font-medium">Terms of Service</span> and{' '}
+                <span className="text-[#2E7542] font-medium">Privacy Policy</span>
               </label>
             </div>
 
@@ -235,7 +235,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -258,7 +258,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
               <button
                 type="button"
                 onClick={onSwitchToLogin}
-                className="text-[#287A46] hover:text-[#1E6337] font-semibold transition-colors"
+                className="text-[#2E7542] hover:text-[#1E6337] font-semibold transition-colors"
               >
                 Sign in
               </button>

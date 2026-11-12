@@ -89,7 +89,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
             <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">
               Repayment Risk Monitor
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#287A46] border border-[#C6E5CD]">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD]">
               <ShieldAlert className="w-3 h-3" />
               Rule-Based Early Warning
             </span>
@@ -102,7 +102,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
 
       {/* Transparent Disclaimer Banner */}
       <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 flex items-start gap-3">
-        <Info className="w-4 h-4 text-[#287A46] shrink-0 mt-0.5" />
+        <Info className="w-4 h-4 text-[#2E7542] shrink-0 mt-0.5" />
         <div className="leading-relaxed">
           <strong>Transparent Operational Monitoring:</strong> This system applies explainable microfinance monitoring rules (days elapsed since last collection, remaining balance ratio, and scheduled maturity dates). It does not claim to use black-box credit scores or default predictions. AI assists staff by summarizing facts and recommending field actions.
         </div>
@@ -122,12 +122,12 @@ export const RiskMonitoringDashboard: React.FC = () => {
 
         <div className="bg-white rounded-xl border border-red-200 p-5 shadow-xs bg-red-50/20">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#E92F2B] uppercase tracking-wide">
+            <span className="text-xs font-semibold text-[#E4332C] uppercase tracking-wide">
               High Attention
             </span>
-            <span className="w-2 h-2 rounded-full bg-[#E92F2B]" />
+            <span className="w-2 h-2 rounded-full bg-[#E4332C]" />
           </div>
-          <div className="mt-2 text-2xl font-bold font-mono text-[#E92F2B]">
+          <div className="mt-2 text-2xl font-bold font-mono text-[#E4332C]">
             {riskData.highAttentionCount}
           </div>
           <p className="mt-1 text-xs text-[#718078]">Require immediate outreach</p>
@@ -148,12 +148,12 @@ export const RiskMonitoringDashboard: React.FC = () => {
 
         <div className="bg-white rounded-xl border border-[#C6E5CD] p-5 shadow-xs bg-[#E7F3EA]/30">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#287A46] uppercase tracking-wide">
+            <span className="text-xs font-semibold text-[#2E7542] uppercase tracking-wide">
               Low Attention
             </span>
-            <span className="w-2 h-2 rounded-full bg-[#287A46]" />
+            <span className="w-2 h-2 rounded-full bg-[#2E7542]" />
           </div>
-          <div className="mt-2 text-2xl font-bold font-mono text-[#287A46]">
+          <div className="mt-2 text-2xl font-bold font-mono text-[#2E7542]">
             {riskData.lowAttentionCount}
           </div>
           <p className="mt-1 text-xs text-[#718078]">In good standing</p>
@@ -169,7 +169,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Filter by borrower name or loan reference..."
-            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           />
         </div>
 
@@ -211,18 +211,18 @@ export const RiskMonitoringDashboard: React.FC = () => {
                 <tr key={a.loanId} className="hover:bg-slate-50 transition-colors">
                   <td className="py-3 px-4 whitespace-nowrap">
                     <span className="font-semibold text-[#17231F] block">{a.clientName}</span>
-                    <span className="font-mono text-[11px] text-[#287A46]">
+                    <span className="font-mono text-[11px] text-[#2E7542]">
                       {a.loanReference} · {a.clientNumber}
                     </span>
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-slate-700 whitespace-nowrap">
                     {formatKES(a.totalAmountDue)}
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-[#287A46] font-medium whitespace-nowrap">
+                  <td className="py-3 px-4 text-right font-mono text-[#2E7542] font-medium whitespace-nowrap">
                     {formatKES(a.totalRepaid)}
                   </td>
                   <td className="py-3 px-4 text-right font-mono font-bold whitespace-nowrap">
-                    <span className={a.outstandingBalance > 0 ? 'text-[#E92F2B]' : 'text-[#287A46]'}>
+                    <span className={a.outstandingBalance > 0 ? 'text-[#E4332C]' : 'text-[#2E7542]'}>
                       {formatKES(a.outstandingBalance)}
                     </span>
                     <span className="block text-[10px] text-[#718078] font-normal">
@@ -244,14 +244,14 @@ export const RiskMonitoringDashboard: React.FC = () => {
                   <td className="py-3 px-4">
                     <div className="flex flex-wrap gap-1 max-w-xs">
                       {a.detectedIndicators.length === 0 ? (
-                        <span className="text-[11px] text-[#287A46] font-medium">Nominal schedule</span>
+                        <span className="text-[11px] text-[#2E7542] font-medium">Nominal schedule</span>
                       ) : (
                         a.detectedIndicators.map((ind, idx) => (
                           <span
                             key={idx}
                             className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
                               ind.severity === 'high'
-                                ? 'bg-red-50 text-[#E92F2B] border border-red-200'
+                                ? 'bg-red-50 text-[#E4332C] border border-red-200'
                                 : 'bg-amber-50 text-[#D99A30] border border-amber-200'
                             }`}
                           >
@@ -265,19 +265,19 @@ export const RiskMonitoringDashboard: React.FC = () => {
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md border ${
                         a.attentionCategory === 'High Attention'
-                          ? 'bg-red-50 text-[#E92F2B] border-red-200'
+                          ? 'bg-red-50 text-[#E4332C] border-red-200'
                           : a.attentionCategory === 'Medium Attention'
                           ? 'bg-amber-50 text-[#D99A30] border-amber-200'
-                          : 'bg-[#E7F3EA] text-[#287A46] border-[#C6E5CD]'
+                          : 'bg-[#E7F3EA] text-[#2E7542] border-[#C6E5CD]'
                       }`}
                     >
                       <span
                         className={`w-1.5 h-1.5 rounded-full ${
                           a.attentionCategory === 'High Attention'
-                            ? 'bg-[#E92F2B]'
+                            ? 'bg-[#E4332C]'
                             : a.attentionCategory === 'Medium Attention'
                             ? 'bg-[#D99A30]'
-                            : 'bg-[#287A46]'
+                            : 'bg-[#2E7542]'
                         }`}
                       />
                       {a.attentionCategory}
@@ -286,7 +286,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
                   <td className="py-3 px-4 text-right whitespace-nowrap">
                     <button
                       onClick={() => handleOpenAiExplanation(a)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded-md transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-[#2E7542] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded-md transition-colors cursor-pointer"
                       title="Explain with AI"
                     >
                       <Sparkles className="w-3 h-3" />
@@ -309,7 +309,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
             {/* Modal Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB] bg-[#F5F7F6]">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#287A46] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#2E7542] flex items-center justify-center">
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
@@ -341,13 +341,13 @@ export const RiskMonitoringDashboard: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-500 block">Repaid:</span>
-                  <span className="font-mono font-semibold text-[#287A46]">
+                  <span className="font-mono font-semibold text-[#2E7542]">
                     {formatKES(selectedAssessment.totalRepaid)}
                   </span>
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-500 block">Outstanding:</span>
-                  <span className="font-mono font-bold text-[#E92F2B]">
+                  <span className="font-mono font-bold text-[#E4332C]">
                     {formatKES(selectedAssessment.outstandingBalance)}
                   </span>
                 </div>
@@ -376,14 +376,14 @@ export const RiskMonitoringDashboard: React.FC = () => {
 
               {/* AI Explanation Box */}
               <div>
-                <span className="text-xs font-bold text-[#287A46] flex items-center gap-1.5 mb-1.5">
+                <span className="text-xs font-bold text-[#2E7542] flex items-center gap-1.5 mb-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>AI Operational Summary for Loan Officer:</span>
                 </span>
                 <div className="p-4 bg-[#E7F3EA]/30 border border-[#C6E5CD] rounded-xl text-xs text-[#17231F] leading-relaxed">
                   {isExplaining ? (
                     <div className="flex items-center gap-2 text-[#718078]">
-                      <Loader2 className="w-4 h-4 animate-spin text-[#287A46]" />
+                      <Loader2 className="w-4 h-4 animate-spin text-[#2E7542]" />
                       <span>Generating contextual credit officer guidance...</span>
                     </div>
                   ) : (
@@ -406,7 +406,7 @@ export const RiskMonitoringDashboard: React.FC = () => {
                   setSelectedAssessment(null);
                   navigateTo('loan-details', { loanId: selectedAssessment.loanId });
                 }}
-                className="text-[#287A46] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-[#2E7542] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Open Loan File</span>
                 <ArrowRight className="w-3.5 h-3.5" />

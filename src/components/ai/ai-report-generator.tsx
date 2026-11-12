@@ -127,7 +127,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
             <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">
               AI Management Report Generator
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#287A46] border border-[#C6E5CD]">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD]">
               <Sparkles className="w-3 h-3" />
               Executive Suite
             </span>
@@ -179,7 +179,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
                   onClick={() => setReportType(cat.id)}
                   className={`p-3 text-left rounded-lg border transition-all cursor-pointer ${
                     reportType === cat.id
-                      ? 'border-[#287A46] bg-[#E7F3EA]/50 ring-1 ring-[#287A46]'
+                      ? 'border-[#2E7542] bg-[#E7F3EA]/50 ring-1 ring-[#2E7542]'
                       : 'border-[#E5E7EB] hover:bg-slate-50'
                   }`}
                 >
@@ -199,7 +199,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
               <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
               >
                 <option value="Current Month">Current Month (November 2024)</option>
                 <option value="Last 30 Days">Last 30 Days Rolling</option>
@@ -212,7 +212,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="w-full py-2.5 px-4 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isGenerating ? (
                 <>
@@ -235,7 +235,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
         <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-md p-6 sm:p-8 space-y-6 print:border-none print:shadow-none">
           {/* Report Top Toolbar */}
           <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB] print:hidden">
-            <div className="flex items-center gap-2 text-xs text-[#287A46] font-semibold">
+            <div className="flex items-center gap-2 text-xs text-[#2E7542] font-semibold">
               <CheckCircle2 className="w-4 h-4" />
               <span>Report Generated Successfully</span>
             </div>
@@ -249,7 +249,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
               </button>
               <button
                 onClick={handlePDFExport}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#287A46] rounded-lg hover:bg-[#1E6337] transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#2E7542] rounded-lg hover:bg-[#1E6337] transition-colors cursor-pointer"
               >
                 <FileDown className="w-3.5 h-3.5" />
                 <span>Export PDF</span>
@@ -269,7 +269,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xl font-bold tracking-tight text-[#17231F]">INUKA</span>
-                <span className="text-xl font-semibold tracking-tight text-[#287A46]">AFRICA</span>
+                <span className="text-xl font-semibold tracking-tight text-[#2E7542]">AFRICA</span>
               </div>
               <p className="text-[11px] text-[#718078] italic">Making Growth Possible.</p>
               <h2 className="text-lg font-bold text-[#17231F] mt-2">{generatedReport.title}</h2>
@@ -281,7 +281,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
               <p>
                 Generated: <strong className="text-[#17231F]">{generatedReport.generatedDate}</strong>
               </p>
-              <p className="text-[11px] text-[#287A46] font-medium flex items-center sm:justify-end gap-1">
+              <p className="text-[11px] text-[#2E7542] font-medium flex items-center sm:justify-end gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Verified Financial Ledger Audit</span>
               </p>
@@ -318,19 +318,19 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
               </div>
               <div className="p-3 bg-white border border-[#E5E7EB] rounded-lg">
                 <span className="text-[10px] text-[#718078] block">Total Repaid</span>
-                <span className="text-xs font-bold font-mono text-[#287A46]">
+                <span className="text-xs font-bold font-mono text-[#2E7542]">
                   {formatKES(generatedReport.financialPerformance.totalRepaid)}
                 </span>
               </div>
               <div className="p-3 bg-white border border-[#E5E7EB] rounded-lg">
                 <span className="text-[10px] text-[#718078] block">Outstanding Balance</span>
-                <span className="text-xs font-bold font-mono text-[#E92F2B]">
+                <span className="text-xs font-bold font-mono text-[#E4332C]">
                   {formatKES(generatedReport.financialPerformance.outstandingBalance)}
                 </span>
               </div>
               <div className="p-3 bg-white border border-[#E5E7EB] rounded-lg col-span-2 sm:col-span-1">
                 <span className="text-[10px] text-[#718078] block">Collection Rate</span>
-                <span className="text-xs font-bold font-mono text-[#287A46]">
+                <span className="text-xs font-bold font-mono text-[#2E7542]">
                   {generatedReport.financialPerformance.collectionRate}%
                 </span>
               </div>
@@ -353,7 +353,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
               </div>
               <div className="p-2.5 bg-slate-50 rounded-lg">
                 <span className="text-[#718078]">Fully Settled:</span>{' '}
-                <strong className="text-[#287A46] font-mono">{generatedReport.portfolioStatistics.fullyPaidLoans}</strong>
+                <strong className="text-[#2E7542] font-mono">{generatedReport.portfolioStatistics.fullyPaidLoans}</strong>
               </div>
               <div className="p-2.5 bg-slate-50 rounded-lg">
                 <span className="text-[#718078]">Partially Paid:</span>{' '}
@@ -382,7 +382,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
             <ul className="space-y-1.5 text-xs text-[#17231F]">
               {generatedReport.observations.map((obs, idx) => (
                 <li key={idx} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#287A46] mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7542] mt-1.5 shrink-0" />
                   <span>{obs}</span>
                 </li>
               ))}
@@ -397,7 +397,7 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
             <div className="space-y-2">
               {generatedReport.recommendations.map((rec, idx) => (
                 <div key={idx} className="p-3 rounded-lg bg-[#E7F3EA]/40 border border-[#C6E5CD] text-xs flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#287A46] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#2E7542] shrink-0 mt-0.5" />
                   <span className="text-[#17231F] font-medium">{rec}</span>
                 </div>
               ))}

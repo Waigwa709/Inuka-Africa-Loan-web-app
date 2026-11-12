@@ -25,7 +25,7 @@ export const RepaymentProgress: React.FC<RepaymentProgressProps> = ({
     <div className={`p-5 bg-white rounded-xl border border-[#E5E7EB] shadow-xs ${className}`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-semibold text-[#17231F]">Repayment Progress</span>
-        <span className="text-sm font-bold font-mono text-[#287A46]">
+        <span className="text-sm font-bold font-mono text-[#2E7542]">
           {percentage.toFixed(1)}% Repaid
         </span>
       </div>
@@ -35,9 +35,9 @@ export const RepaymentProgress: React.FC<RepaymentProgressProps> = ({
         <div
           className={`h-full rounded-full transition-all duration-500 ease-out ${
             isComplete
-              ? 'bg-[#287A46]'
+              ? 'bg-[#2E7542]'
               : percentage > 50
-              ? 'bg-[#287A46]'
+              ? 'bg-[#2E7542]'
               : 'bg-[#D99A30]'
           }`}
           style={{ width: `${percentage}%` }}
@@ -62,7 +62,7 @@ export const RepaymentProgress: React.FC<RepaymentProgressProps> = ({
 
         <div className="text-right">
           <span className="text-[#718078] block text-[11px]">Remaining:</span>
-          <span className={`font-mono font-bold ${outstandingBalance > 0 ? 'text-[#E92F2B]' : 'text-[#287A46]'}`}>
+          <span className={`font-mono font-bold ${outstandingBalance > 0 ? 'text-[#E4332C]' : 'text-[#2E7542]'}`}>
             {formatKES(outstandingBalance)}
           </span>
         </div>

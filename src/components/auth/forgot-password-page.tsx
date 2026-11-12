@@ -54,7 +54,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onSwitch
 
           <div className="bg-white rounded-2xl shadow-xl border border-[#E5E7EB] p-8 text-center">
             <div className="w-16 h-16 bg-[#E7F3EA] rounded-full flex items-center justify-center mx-auto mb-6">
-              <MailCheck className="w-8 h-8 text-[#287A46]" />
+              <MailCheck className="w-8 h-8 text-[#2E7542]" />
             </div>
 
             <h1 className="text-2xl font-bold text-[#17231F] mb-2">Check Your Email</h1>
@@ -70,7 +70,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onSwitch
 
             <button
               onClick={onSwitchToLogin}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Sign In</span>
@@ -118,13 +118,13 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onSwitch
                     if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                   }}
                   className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                    errors.email ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.email ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="you@example.com"
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.email}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.email}</p>
               )}
             </div>
 
@@ -132,7 +132,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onSwitch
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -153,7 +153,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onSwitch
             <button
               type="button"
               onClick={onSwitchToLogin}
-              className="inline-flex items-center gap-2 text-sm text-[#287A46] hover:text-[#1E6337] font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-[#2E7542] hover:text-[#1E6337] font-medium transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Sign In</span>

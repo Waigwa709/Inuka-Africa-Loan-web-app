@@ -46,7 +46,7 @@ export const DashboardView: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => navigateTo('ai-chat')}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] border border-[#C6E5CD] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#2E7542] bg-[#E7F3EA] hover:bg-[#C6E5CD] border border-[#C6E5CD] rounded-lg transition-colors cursor-pointer shadow-xs"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Assistant</span>
@@ -61,7 +61,7 @@ export const DashboardView: React.FC = () => {
 
           <button
             onClick={() => openLoanModal()}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Register New Loan</span>
@@ -114,7 +114,7 @@ export const DashboardView: React.FC = () => {
               </div>
               <button
                 onClick={() => navigateTo('repayments')}
-                className="text-xs font-semibold text-[#287A46] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-semibold text-[#2E7542] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>View All</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -139,13 +139,13 @@ export const DashboardView: React.FC = () => {
                       className="hover:bg-slate-50 transition-colors group cursor-pointer"
                       onClick={() => navigateTo('loan-details', { loanId: rep.loanId })}
                     >
-                      <td className="py-2.5 font-medium text-[#17231F] group-hover:text-[#287A46]">
+                      <td className="py-2.5 font-medium text-[#17231F] group-hover:text-[#2E7542]">
                         {rep.clientName}
                       </td>
                       <td className="py-2.5 font-mono text-slate-600">
                         {rep.loanReference}
                       </td>
-                      <td className="py-2.5 font-mono text-[#287A46] font-medium">
+                      <td className="py-2.5 font-mono text-[#2E7542] font-medium">
                         {rep.paymentReference}
                       </td>
                       <td className="py-2.5 text-slate-500 whitespace-nowrap">
@@ -165,7 +165,7 @@ export const DashboardView: React.FC = () => {
             <span>Showing recent 5 collections</span>
             <button
               onClick={() => openRepaymentModal()}
-              className="text-[#287A46] font-semibold hover:underline cursor-pointer"
+              className="text-[#2E7542] font-semibold hover:underline cursor-pointer"
             >
               + Record Repayment
             </button>
@@ -182,7 +182,7 @@ export const DashboardView: React.FC = () => {
               </div>
               <button
                 onClick={() => navigateTo('loans')}
-                className="text-xs font-semibold text-[#287A46] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-semibold text-[#2E7542] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>View All</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -207,7 +207,7 @@ export const DashboardView: React.FC = () => {
                       className="hover:bg-slate-50 transition-colors group cursor-pointer"
                       onClick={() => navigateTo('loan-details', { loanId: loan.id })}
                     >
-                      <td className="py-2.5 font-medium text-[#17231F] group-hover:text-[#287A46]">
+                      <td className="py-2.5 font-medium text-[#17231F] group-hover:text-[#2E7542]">
                         {loan.clientName}
                       </td>
                       <td className="py-2.5 font-mono text-slate-600">
@@ -233,7 +233,7 @@ export const DashboardView: React.FC = () => {
             <span>Showing recent 5 loan facilities</span>
             <button
               onClick={() => navigateTo('loans')}
-              className="text-[#287A46] font-semibold hover:underline cursor-pointer flex items-center gap-1"
+              className="text-[#2E7542] font-semibold hover:underline cursor-pointer flex items-center gap-1"
             >
               <span>Manage all loans</span>
               <ExternalLink className="w-3 h-3" />

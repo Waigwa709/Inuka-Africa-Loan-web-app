@@ -37,7 +37,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
         <p className="text-xs text-[#718078] mt-1">The requested client record does not exist or has been removed.</p>
         <button
           onClick={() => navigateTo('clients')}
-          className="mt-4 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] rounded-lg"
+          className="mt-4 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] rounded-lg"
         >
           Return to Clients
         </button>
@@ -60,7 +60,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">{client.fullName}</h1>
-              <span className="font-mono text-xs font-semibold bg-[#E7F3EA] text-[#287A46] px-2.5 py-0.5 rounded-md border border-[#C6E5CD]">
+              <span className="font-mono text-xs font-semibold bg-[#E7F3EA] text-[#2E7542] px-2.5 py-0.5 rounded-md border border-[#C6E5CD]">
                 {client.clientNumber}
               </span>
             </div>
@@ -82,7 +82,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
         <div className="flex items-center gap-3">
           <button
             onClick={() => openLoanModal(client.id)}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
           >
             <FilePlus2 className="w-4 h-4" />
             <span>Register Loan for Client</span>
@@ -95,7 +95,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-xs grid grid-cols-1 md:grid-cols-3 gap-4">
           {client.phone && (
             <div className="flex items-center gap-2.5 text-slate-600">
-              <Phone className="w-4 h-4 text-[#287A46] shrink-0" />
+              <Phone className="w-4 h-4 text-[#2E7542] shrink-0" />
               <div>
                 <span className="text-[#718078] block text-[10px]">Contact Mobile:</span>
                 <span className="font-mono font-medium text-[#17231F]">{client.phone}</span>
@@ -104,7 +104,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
           )}
           {client.email && (
             <div className="flex items-center gap-2.5 text-slate-600">
-              <Mail className="w-4 h-4 text-[#287A46] shrink-0" />
+              <Mail className="w-4 h-4 text-[#2E7542] shrink-0" />
               <div>
                 <span className="text-[#718078] block text-[10px]">Email Address:</span>
                 <span className="font-medium text-[#17231F]">{client.email}</span>
@@ -162,7 +162,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
           </div>
           <button
             onClick={() => openLoanModal(client.id)}
-            className="text-xs font-semibold text-[#287A46] hover:underline cursor-pointer flex items-center gap-1"
+            className="text-xs font-semibold text-[#2E7542] hover:underline cursor-pointer flex items-center gap-1"
           >
             <span>+ Add New Facility</span>
           </button>
@@ -194,7 +194,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
                     className="hover:bg-slate-50 transition-colors group cursor-pointer"
                     onClick={() => navigateTo('loan-details', { loanId: loan.id })}
                   >
-                    <td className="py-3 px-3 font-mono font-medium text-[#287A46]">
+                    <td className="py-3 px-3 font-mono font-medium text-[#2E7542]">
                       {loan.loanReference}
                     </td>
                     <td className="py-3 px-3 text-[#17231F] max-w-xs truncate">
@@ -206,11 +206,11 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
                     <td className="py-3 px-3 text-right font-mono text-slate-800">
                       {formatKES(loan.totalAmountDue)}
                     </td>
-                    <td className="py-3 px-3 text-right font-mono text-[#287A46] font-medium">
+                    <td className="py-3 px-3 text-right font-mono text-[#2E7542] font-medium">
                       {formatKES(loan.totalRepaid)}
                     </td>
                     <td className="py-3 px-3 text-right font-mono font-semibold">
-                      <span className={loan.outstandingBalance > 0 ? 'text-[#E92F2B]' : 'text-[#287A46]'}>
+                      <span className={loan.outstandingBalance > 0 ? 'text-[#E4332C]' : 'text-[#2E7542]'}>
                         {formatKES(loan.outstandingBalance)}
                       </span>
                     </td>
@@ -225,7 +225,7 @@ export const ClientDetailsView: React.FC<ClientDetailsProps> = ({ clientId }) =>
                         {loan.outstandingBalance > 0 && (
                           <button
                             onClick={() => openRepaymentModal(loan.id)}
-                            className="px-2.5 py-1 text-[11px] font-semibold text-[#287A46] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded transition-colors cursor-pointer"
+                            className="px-2.5 py-1 text-[11px] font-semibold text-[#2E7542] bg-[#E7F3EA] hover:bg-[#C6E5CD] rounded transition-colors cursor-pointer"
                           >
                             Repay
                           </button>

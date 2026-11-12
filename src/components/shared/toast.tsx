@@ -63,8 +63,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             }`}
           >
             <div className="shrink-0 mt-0.5">
-              {item.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#287A46]" />}
-              {item.type === 'error' && <AlertCircle className="w-5 h-5 text-[#E92F2B]" />}
+              {item.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#2E7542]" />}
+              {item.type === 'error' && <AlertCircle className="w-5 h-5 text-[#E4332C]" />}
               {item.type === 'info' && <Info className="w-5 h-5 text-[#3578C8]" />}
             </div>
             <div className="flex-1 min-w-0">

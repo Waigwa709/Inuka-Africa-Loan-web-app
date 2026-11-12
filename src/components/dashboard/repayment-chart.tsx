@@ -48,8 +48,8 @@ export const RepaymentOverviewChart: React.FC = () => {
           <p className="font-semibold text-[#17231F] mb-1.5">{label}</p>
           <div className="space-y-1">
             <div className="flex items-center justify-between gap-4">
-              <span className="flex items-center gap-1.5 text-[#287A46]">
-                <span className="w-2 h-2 rounded-xs bg-[#287A46]" />
+              <span className="flex items-center gap-1.5 text-[#2E7542]">
+                <span className="w-2 h-2 rounded-xs bg-[#2E7542]" />
                 Actual Collections:
               </span>
               <span className="font-mono font-bold text-[#17231F]">
@@ -83,7 +83,7 @@ export const RepaymentOverviewChart: React.FC = () => {
         </div>
         <div className="flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-xs bg-[#287A46]" />
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#2E7542]" />
             <span className="text-slate-600 font-medium">Repayments (KES)</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -110,7 +110,7 @@ export const RepaymentOverviewChart: React.FC = () => {
               tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="actual" fill="#287A46" radius={[4, 4, 0, 0]} maxBarSize={36} />
+            <Bar dataKey="actual" fill="#2E7542" radius={[4, 4, 0, 0]} maxBarSize={36} />
             <Bar dataKey="target" fill="#E2E8F0" radius={[4, 4, 0, 0]} maxBarSize={36} />
           </BarChart>
         </ResponsiveContainer>

@@ -77,13 +77,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
                     if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                   }}
                   className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                    errors.email ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.email ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="you@example.com"
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.email}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.email}</p>
               )}
             </div>
 
@@ -102,8 +102,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
                     if (errors.password) setErrors((prev) => ({ ...prev, password: '' }));
                   }}
                   className={`w-full pl-10 pr-12 py-3 rounded-lg border ${
-                    errors.password ? 'border-[#E92F2B]' : 'border-[#E5E7EB]'
-                  } focus:border-[#287A46] focus:ring-2 focus:ring-[#287A46]/20 focus:outline-none transition-all`}
+                    errors.password ? 'border-[#E4332C]' : 'border-[#E5E7EB]'
+                  } focus:border-[#2E7542] focus:ring-2 focus:ring-[#2E7542]/20 focus:outline-none transition-all`}
                   placeholder="••••••••"
                 />
                 <button
@@ -115,7 +115,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.password}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.password}</p>
               )}
             </div>
 
@@ -124,7 +124,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
               <button
                 type="button"
                 onClick={onSwitchToForgotPassword}
-                className="text-sm text-[#287A46] hover:text-[#1E6337] font-medium transition-colors"
+                className="text-sm text-[#2E7542] hover:text-[#1E6337] font-medium transition-colors"
               >
                 Forgot password?
               </button>
@@ -134,7 +134,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -153,7 +153,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
           {/* Demo Credentials */}
           <div className="mt-6 p-4 bg-[#E7F3EA] rounded-lg border border-[#C6E5CD]">
             <div className="flex items-start gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#287A46] mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-[#2E7542] mt-0.5 shrink-0" />
               <div className="text-xs">
                 <p className="font-semibold text-[#17231F] mb-1">Demo Credentials</p>
                 <p className="text-[#718078]">Email: admin@inuka.co.ke</p>
@@ -169,7 +169,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
               <button
                 type="button"
                 onClick={onSwitchToSignup}
-                className="text-[#287A46] hover:text-[#1E6337] font-semibold transition-colors"
+                className="text-[#2E7542] hover:text-[#1E6337] font-semibold transition-colors"
               >
                 Sign up
               </button>

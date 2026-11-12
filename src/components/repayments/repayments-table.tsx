@@ -92,9 +92,9 @@ export const RepaymentsTableView: React.FC = () => {
       return <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 opacity-60 ml-1 inline" />;
     }
     return sortOrder === 'asc' ? (
-      <ArrowUp className="w-3.5 h-3.5 text-[#287A46] ml-1 inline" />
+      <ArrowUp className="w-3.5 h-3.5 text-[#2E7542] ml-1 inline" />
     ) : (
-      <ArrowDown className="w-3.5 h-3.5 text-[#287A46] ml-1 inline" />
+      <ArrowDown className="w-3.5 h-3.5 text-[#2E7542] ml-1 inline" />
     );
   };
 
@@ -180,7 +180,7 @@ export const RepaymentsTableView: React.FC = () => {
 
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs"
             title="Download PDF report"
           >
             <FileDown className="w-4 h-4" />
@@ -189,7 +189,7 @@ export const RepaymentsTableView: React.FC = () => {
 
           <button
             onClick={() => openRepaymentModal()}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
+            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs shrink-0"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Record Repayment</span>
@@ -210,7 +210,7 @@ export const RepaymentsTableView: React.FC = () => {
               setCurrentPage(1);
             }}
             placeholder="Search by payment reference (e.g. MPX...) or borrower name..."
-            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           />
         </div>
 
@@ -223,7 +223,7 @@ export const RepaymentsTableView: React.FC = () => {
               setLoanFilter(e.target.value);
               setCurrentPage(1);
             }}
-            className="px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="px-3 py-2 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           >
             <option value="all">All Loan References</option>
             {uniqueLoanRefs.map((ref) => (
@@ -243,7 +243,7 @@ export const RepaymentsTableView: React.FC = () => {
               setPageSize(Number(e.target.value));
               setCurrentPage(1);
             }}
-            className="px-2 py-1.5 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+            className="px-2 py-1.5 text-xs rounded-lg border border-[#E5E7EB] bg-white text-[#17231F] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
           >
             <option value={5}>5 per page</option>
             <option value={10}>10 per page</option>
@@ -325,10 +325,10 @@ export const RepaymentsTableView: React.FC = () => {
                     className="hover:bg-[#F5F7F6]/60 transition-colors group cursor-pointer"
                     onClick={() => navigateTo('loan-details', { loanId: rep.loanId })}
                   >
-                    <td className="py-3.5 px-4 font-mono font-bold text-[#287A46] whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#2E7542] whitespace-nowrap">
                       {rep.paymentReference}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-[#17231F] whitespace-nowrap group-hover:text-[#287A46]">
+                    <td className="py-3.5 px-4 font-semibold text-[#17231F] whitespace-nowrap group-hover:text-[#2E7542]">
                       {rep.clientName}
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600 whitespace-nowrap">
@@ -346,7 +346,7 @@ export const RepaymentsTableView: React.FC = () => {
                       {rep.dateRecorded}
                     </td>
                     <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                      <span className="inline-block px-2 py-0.5 rounded text-[11px] font-medium bg-[#E7F3EA] text-[#287A46] border border-[#C6E5CD]">
+                      <span className="inline-block px-2 py-0.5 rounded text-[11px] font-medium bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD]">
                         {rep.paymentMethod || 'M-Pesa'}
                       </span>
                     </td>

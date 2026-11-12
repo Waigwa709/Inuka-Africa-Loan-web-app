@@ -132,9 +132,9 @@ export const QuickSearchModal: React.FC = () => {
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#E7F3EA]/50 text-left transition-colors cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Users className="w-4 h-4 text-[#287A46]" />
+                      <Users className="w-4 h-4 text-[#2E7542]" />
                       <div>
-                        <p className="text-xs font-semibold text-[#17231F] group-hover:text-[#287A46]">
+                        <p className="text-xs font-semibold text-[#17231F] group-hover:text-[#2E7542]">
                           {c.fullName}
                         </p>
                         <p className="text-[11px] text-[#718078] font-mono">
@@ -142,7 +142,7 @@ export const QuickSearchModal: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#287A46] transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#2E7542] transition-transform group-hover:translate-x-0.5" />
                   </button>
                 ))}
               </div>
@@ -162,10 +162,10 @@ export const QuickSearchModal: React.FC = () => {
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#E7F3EA]/50 text-left transition-colors cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <FileText className="w-4 h-4 text-[#287A46]" />
+                      <FileText className="w-4 h-4 text-[#2E7542]" />
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold text-[#17231F] font-mono group-hover:text-[#287A46]">
+                          <span className="text-xs font-semibold text-[#17231F] font-mono group-hover:text-[#2E7542]">
                             {l.loanReference}
                           </span>
                           <span className="text-[10px] font-medium text-slate-500">
@@ -177,7 +177,7 @@ export const QuickSearchModal: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#287A46] transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#2E7542] transition-transform group-hover:translate-x-0.5" />
                   </button>
                 ))}
               </div>
@@ -197,9 +197,9 @@ export const QuickSearchModal: React.FC = () => {
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#E7F3EA]/50 text-left transition-colors cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <CreditCard className="w-4 h-4 text-[#287A46]" />
+                      <CreditCard className="w-4 h-4 text-[#2E7542]" />
                       <div>
-                        <p className="text-xs font-semibold text-[#17231F] font-mono group-hover:text-[#287A46]">
+                        <p className="text-xs font-semibold text-[#17231F] font-mono group-hover:text-[#2E7542]">
                           {r.paymentReference}
                         </p>
                         <p className="text-[11px] text-[#718078]">
@@ -207,7 +207,7 @@ export const QuickSearchModal: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#287A46] transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#2E7542] transition-transform group-hover:translate-x-0.5" />
                   </button>
                 ))}
               </div>

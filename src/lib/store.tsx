@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { Client, ClientWithStats } from '../types/client';
 import { Loan } from '../types/loan';
 import { Repayment } from '../types/repayment';

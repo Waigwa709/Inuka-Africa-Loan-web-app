@@ -25,7 +25,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         <span className="text-xs font-semibold tracking-wide uppercase text-[#718078]">
           {title}
         </span>
-        <div className="w-8 h-8 rounded-lg bg-[#F5F7F6] text-[#287A46] flex items-center justify-center shrink-0 border border-[#E5E7EB]">
+        <div className="w-8 h-8 rounded-lg bg-[#F5F7F6] text-[#2E7542] flex items-center justify-center shrink-0 border border-[#E5E7EB]">
           <Icon className="w-4 h-4" />
         </div>
       </div>
@@ -37,7 +37,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         {description && (
           <p className="mt-1 text-xs text-[#718078] flex items-center gap-1.5">
             {badge && (
-              <span className="font-medium text-[#287A46]">{badge}</span>
+              <span className="font-medium text-[#2E7542]">{badge}</span>
             )}
             <span>{description}</span>
           </p>

@@ -159,7 +159,7 @@ export const AIChatAssistant: React.FC = () => {
             <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">
               AI Financial Insights Assistant
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#287A46] border border-[#C6E5CD]">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD]">
               <Sparkles className="w-3 h-3" />
               Gemini Powered
             </span>
@@ -195,7 +195,7 @@ export const AIChatAssistant: React.FC = () => {
               className="text-left p-2.5 rounded-lg border border-[#E5E7EB] bg-[#F5F7F6]/50 hover:bg-[#E7F3EA]/60 hover:border-[#C6E5CD] transition-colors text-xs text-[#17231F] font-medium flex items-center justify-between group cursor-pointer disabled:opacity-50"
             >
               <span className="truncate mr-2">{q}</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#287A46] group-hover:translate-x-0.5 transition-transform shrink-0" />
+              <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2E7542] group-hover:translate-x-0.5 transition-transform shrink-0" />
             </button>
           ))}
         </div>
@@ -216,7 +216,7 @@ export const AIChatAssistant: React.FC = () => {
                 <div
                   className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
                     isAI
-                      ? 'bg-[#287A46] text-white border-[#1E6337]'
+                      ? 'bg-[#2E7542] text-white border-[#1E6337]'
                       : 'bg-[#111827] text-white border-slate-700'
                   }`}
                 >
@@ -237,7 +237,7 @@ export const AIChatAssistant: React.FC = () => {
                     className={`p-4 rounded-xl text-xs leading-relaxed whitespace-pre-wrap ${
                       isAI
                         ? 'bg-[#F5F7F6] text-[#17231F] border border-[#E5E7EB]'
-                        : 'bg-[#287A46] text-white'
+                        : 'bg-[#2E7542] text-white'
                     }`}
                   >
                     {m.content}
@@ -245,7 +245,7 @@ export const AIChatAssistant: React.FC = () => {
                     {/* Verified data badge on AI messages */}
                     {isAI && (
                       <div className="mt-3 pt-2.5 border-t border-slate-200/80 flex items-center justify-between text-[10px] text-slate-500">
-                        <span className="flex items-center gap-1 text-[#287A46] font-medium">
+                        <span className="flex items-center gap-1 text-[#2E7542] font-medium">
                           <ShieldCheck className="w-3.5 h-3.5" />
                           <span>Verified with Institutional Ledger</span>
                         </span>
@@ -256,8 +256,8 @@ export const AIChatAssistant: React.FC = () => {
                         >
                           {copiedId === m.id ? (
                             <>
-                              <Check className="w-3 h-3 text-[#287A46]" />
-                              <span className="text-[#287A46]">Copied</span>
+                              <Check className="w-3 h-3 text-[#2E7542]" />
+                              <span className="text-[#2E7542]">Copied</span>
                             </>
                           ) : (
                             <>
@@ -277,11 +277,11 @@ export const AIChatAssistant: React.FC = () => {
           {/* Loading indicator */}
           {isLoading && (
             <div className="flex gap-3 max-w-2xl mr-auto items-center">
-              <div className="w-8 h-8 rounded-lg bg-[#287A46] text-white flex items-center justify-center shrink-0 animate-pulse">
+              <div className="w-8 h-8 rounded-lg bg-[#2E7542] text-white flex items-center justify-center shrink-0 animate-pulse">
                 <Bot className="w-4 h-4" />
               </div>
               <div className="p-3.5 rounded-xl bg-[#F5F7F6] border border-[#E5E7EB] text-xs text-[#718078] flex items-center gap-2">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#287A46]" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#2E7542]" />
                 <span>Consulting verified financial analytics & interpreting...</span>
               </div>
             </div>
@@ -305,12 +305,12 @@ export const AIChatAssistant: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything about loan disbursements, collections, balances or trends..."
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 text-xs bg-white rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden disabled:bg-slate-100"
+              className="flex-1 px-4 py-2.5 text-xs bg-white rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden disabled:bg-slate-100"
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="px-4 py-2.5 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
+              className="px-4 py-2.5 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

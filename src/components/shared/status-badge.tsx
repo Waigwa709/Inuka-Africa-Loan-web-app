@@ -11,9 +11,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className = ''
     case 'Fully Paid':
       return (
         <span
-          className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md bg-[#E7F3EA] text-[#287A46] border border-[#C6E5CD] whitespace-nowrap ${className}`}
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md bg-[#E7F3EA] text-[#2E7542] border border-[#C6E5CD] whitespace-nowrap ${className}`}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#287A46]" aria-hidden="true" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#2E7542]" aria-hidden="true" />
           Fully Paid
         </span>
       );

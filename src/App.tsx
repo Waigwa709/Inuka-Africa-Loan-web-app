@@ -58,7 +58,7 @@ const AppContent: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F5F7F6]">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#287A46]/30 border-t-[#287A46] rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-12 h-12 border-4 border-[#2E7542]/30 border-t-[#2E7542] rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm text-[#718078]">Loading Inuka Africa...</p>
         </div>
       </div>

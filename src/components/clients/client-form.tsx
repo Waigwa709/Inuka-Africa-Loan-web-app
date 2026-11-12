@@ -90,7 +90,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB] bg-[#F5F7F6]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#287A46] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E7F3EA] text-[#2E7542] flex items-center justify-center">
               <UserPlus className="w-4 h-4" />
             </div>
             <div>
@@ -113,7 +113,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                Client Number <span className="text-[#E92F2B]">*</span>
+                Client Number <span className="text-[#E4332C]">*</span>
               </label>
               <input
                 type="text"
@@ -123,12 +123,12 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   if (errors.clientNumber) setErrors((prev) => ({ ...prev, clientNumber: '' }));
                 }}
                 className={`w-full px-3 py-2 text-sm rounded-lg border font-mono ${
-                  errors.clientNumber ? 'border-[#E92F2B] focus:ring-1 focus:ring-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                  errors.clientNumber ? 'border-[#E4332C] focus:ring-1 focus:ring-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                 } focus:outline-hidden`}
                 placeholder="INK-C-1013"
               />
               {errors.clientNumber && (
-                <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+                <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                   <AlertCircle className="w-3 h-3 shrink-0" />
                   {errors.clientNumber}
                 </p>
@@ -137,7 +137,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-[#17231F] mb-1">
-                Full Name <span className="text-[#E92F2B]">*</span>
+                Full Name <span className="text-[#E4332C]">*</span>
               </label>
               <input
                 type="text"
@@ -147,12 +147,12 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   if (errors.fullName) setErrors((prev) => ({ ...prev, fullName: '' }));
                 }}
                 className={`w-full px-3 py-2 text-sm rounded-lg border ${
-                  errors.fullName ? 'border-[#E92F2B] focus:ring-1 focus:ring-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                  errors.fullName ? 'border-[#E4332C] focus:ring-1 focus:ring-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                 } focus:outline-hidden`}
                 placeholder="e.g. Grace Wanjiru Kamau"
               />
               {errors.fullName && (
-                <p className="mt-1 text-xs text-[#E92F2B] flex items-center gap-1">
+                <p className="mt-1 text-xs text-[#E4332C] flex items-center gap-1">
                   <AlertCircle className="w-3 h-3 shrink-0" />
                   {errors.fullName}
                 </p>
@@ -170,7 +170,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden font-mono"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden font-mono"
                 placeholder="+254 7XX XXX XXX"
               />
             </div>
@@ -187,12 +187,12 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                 }}
                 className={`w-full px-3 py-2 text-sm rounded-lg border ${
-                  errors.email ? 'border-[#E92F2B]' : 'border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46]'
+                  errors.email ? 'border-[#E4332C]' : 'border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542]'
                 } focus:outline-hidden`}
                 placeholder="client@example.com"
               />
               {errors.email && (
-                <p className="mt-1 text-xs text-[#E92F2B]">{errors.email}</p>
+                <p className="mt-1 text-xs text-[#E4332C]">{errors.email}</p>
               )}
             </div>
           </div>
@@ -205,7 +205,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden"
+              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] bg-white focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden"
             >
               <option value="Nairobi - Gikomba Market">Nairobi - Gikomba Market</option>
               <option value="Nairobi - Eastleigh 1st Ave">Nairobi - Eastleigh 1st Ave</option>
@@ -228,7 +228,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={2}
-              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#287A46] focus:ring-1 focus:ring-[#287A46] focus:outline-hidden resize-none"
+              className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E7EB] focus:border-[#2E7542] focus:ring-1 focus:ring-[#2E7542] focus:outline-hidden resize-none"
               placeholder="e.g. Retail shop owner, operates grocery wholesaler, verified by group leader..."
             />
           </div>
@@ -246,7 +246,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#287A46] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#2E7542] hover:bg-[#1E6337] rounded-lg transition-colors cursor-pointer shadow-xs disabled:opacity-50"
             >
               {isSubmitting ? 'Registering...' : 'Register Client'}
             </button>
