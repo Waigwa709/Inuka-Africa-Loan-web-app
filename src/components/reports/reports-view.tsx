@@ -18,6 +18,7 @@ import { calculatePortfolioMetrics } from '../../lib/analytics/portfolio-analyti
 import { calculateRepaymentInsights } from '../../lib/analytics/repayment-analytics';
 import { assessPortfolioRisk } from '../../lib/analytics/risk-analysis';
 import { useToast } from '../shared/toast';
+import logoImage from '../../assets/images/Inuka-Africa-logo.png';
 
 export const ReportsView: React.FC = () => {
   const { totalDisbursed, totalRepaidAll, totalOutstandingBalance, loans, totalClientsCount, repayments, clients, clientsWithStats } = useStore();
@@ -48,11 +49,14 @@ export const ReportsView: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E5E7EB]">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">Portfolio Reports</h1>
-          <p className="mt-1 text-sm text-[#718078]">
-            Executive overview of credit risk, collection efficiency and regional disbursements.
-          </p>
+        <div className="flex items-center gap-4">
+          <img src={logoImage} alt="Inuka Africa" className="w-16 h-16 object-contain" />
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-[#17231F]">Portfolio Reports</h1>
+            <p className="mt-1 text-sm text-[#718078]">
+              Executive overview of credit risk, collection efficiency and regional disbursements.
+            </p>
+          </div>
         </div>
 
         <button

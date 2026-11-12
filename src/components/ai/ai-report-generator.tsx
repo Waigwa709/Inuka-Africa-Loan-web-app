@@ -23,6 +23,7 @@ import { ReportCategory, StructuredManagementReport } from '../../lib/ai/types';
 import { formatKES } from '../../lib/currency';
 import { exportReportToPDF } from '../../lib/pdf-export';
 import { useToast } from '../shared/toast';
+import logoImage from '../../assets/images/Inuka-Africa-logo.png';
 
 export const AIReportGenerator: React.FC = () => {
   const { loans, repayments, clients, clientsWithStats } = useStore();
@@ -266,13 +267,16 @@ ${generatedReport.recommendations.map((r) => `• ${r}`).join('\n')}
 
           {/* Report Header / Letterhead */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold tracking-tight text-[#17231F]">INUKA</span>
-                <span className="text-xl font-semibold tracking-tight text-[#2E7542]">AFRICA</span>
+            <div className="flex items-center gap-4">
+              <img src={logoImage} alt="Inuka Africa" className="w-16 h-16 object-contain" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold tracking-tight text-[#17231F]">INUKA</span>
+                  <span className="text-xl font-semibold tracking-tight text-[#2E7542]">AFRICA</span>
+                </div>
+                <p className="text-[11px] text-[#718078] italic">Making Growth Possible.</p>
+                <h2 className="text-lg font-bold text-[#17231F] mt-2">{generatedReport.title}</h2>
               </div>
-              <p className="text-[11px] text-[#718078] italic">Making Growth Possible.</p>
-              <h2 className="text-lg font-bold text-[#17231F] mt-2">{generatedReport.title}</h2>
             </div>
             <div className="text-left sm:text-right text-xs text-[#718078] space-y-1">
               <p>

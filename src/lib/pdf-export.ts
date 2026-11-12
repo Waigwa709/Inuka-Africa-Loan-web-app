@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { formatKES } from './currency';
+import logoImage from '../assets/images/Inuka-Africa-logo.png';
 
 // Brand colors
 const BRAND = {
@@ -38,26 +39,33 @@ function addPDFHeader(doc: jsPDF, options: PDFHeaderOptions): number {
   doc.setFillColor(...BRAND.lightGrey);
   doc.rect(0, 0, pageWidth, 40, 'F');
   
-  // Logo/Brand text
+  // Logo
+  try {
+    doc.addImage(logoImage, 'PNG', margin, 5, 30, 30);
+  } catch (e) {
+    console.warn('Could not add logo to PDF');
+  }
+  
+  // Brand text (shifted right to accommodate logo)
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...BRAND.navy);
-  doc.text('INUKA', margin, 18);
+  doc.text('INUKA', margin + 35, 18);
   
   doc.setTextColor(...BRAND.primary);
-  doc.text('AFRICA', margin + 35, 18);
+  doc.text('AFRICA', margin + 70, 18);
   
   // Tagline
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(...BRAND.muted);
-  doc.text('Making Growth Possible.', margin, 26);
+  doc.text('Making Growth Possible.', margin + 35, 26);
   
   // Report title
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...BRAND.navy);
-  doc.text(options.title, margin, 36);
+  doc.text(options.title, margin + 35, 36);
   
   // Right side info
   const rightX = pageWidth - margin;
@@ -91,17 +99,29 @@ function addPDFFooter(doc: jsPDF): void {
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
   
+  // Footer background
+  doc.setFillColor(...BRAND.primary);
+  doc.rect(0, pageHeight - 30, pageWidth, 30, 'F');
+  
+  // Logo in footer
+  try {
+    doc.addImage(logoImage, 'PNG', margin, pageHeight - 25, 20, 20);
+  } catch (e) {
+    console.warn('Could not add logo to PDF footer');
+  }
+  
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(...BRAND.muted);
+  doc.setTextColor(255, 255, 255);
   
-  doc.text('Prepared by: Inuka Africa Operations & AI Analytics Core', margin, pageHeight - 15);
+  doc.text('Prepared by: Inuka Africa Operations & AI Analytics Core', margin + 25, pageHeight - 15);
   doc.text(`Document ID: INK-REP-${Date.now().toString().slice(-6)} · Confidential`, pageWidth - margin, pageHeight - 15, { align: 'right' });
   
   // Page number
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
+    doc.setTextColor(255, 255, 255);
     doc.text(`Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 15, { align: 'center' });
   }
 }

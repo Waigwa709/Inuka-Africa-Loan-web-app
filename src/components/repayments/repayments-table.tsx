@@ -12,6 +12,7 @@ import {
   Filter,
   ExternalLink,
   FileDown,
+  Receipt,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 import { useNavigation } from '../../lib/navigation';
@@ -19,6 +20,7 @@ import { formatKES } from '../../lib/currency';
 import { EmptyState } from '../shared/empty-state';
 import { exportRepaymentsToPDF } from '../../lib/pdf-export';
 import { useToast } from '../shared/toast';
+import { ReceiptModal } from './receipt-modal';
 
 type RepaymentSortField = 'paymentReference' | 'clientName' | 'loanReference' | 'paymentDate' | 'amount' | 'dateRecorded';
 type SortOrder = 'asc' | 'desc';
@@ -34,6 +36,8 @@ export const RepaymentsTableView: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [pageSize, setPageSize] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedRepayment, setSelectedRepayment] = useState<any>(null);
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
 
   // Filter and search
   const filteredRepayments = useMemo(() => {
@@ -350,6 +354,20 @@ export const RepaymentsTableView: React.FC = () => {
                         {rep.paymentMethod || 'M-Pesa'}
                       </span>
                     </td>
+                    <td className="py-3.5 px-4 text-right whitespace-nowrap">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedRepayment(rep);
+                          setIsReceiptModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-[#2E7542] hover:text-[#1E6337] hover:bg-[#E7F3EA] rounded transition-colors"
+                        title="Generate receipt"
+                      >
+                        <Receipt className="w-3.5 h-3.5" />
+                        <span>Receipt</span>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -395,6 +413,29 @@ export const RepaymentsTableView: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Receipt Modal */}
+      {selectedRepayment && (
+        <ReceiptModal
+          isOpen={isReceiptModalOpen}
+          onClose={() => {
+            setIsReceiptModalOpen(false);
+            setSelectedRepayment(null);
+          }}
+          repayment={{
+            id: selectedRepayment.id,
+            paymentReference: selectedRepayment.paymentReference,
+            amount: selectedRepayment.amount,
+            paymentDate: selectedRepayment.paymentDate,
+            paymentMethod: selectedRepayment.paymentMethod,
+            notes: selectedRepayment.notes,
+            loanReference: selectedRepayment.loanReference,
+            loanPurpose: selectedRepayment.loanPurpose || 'Loan repayment',
+            clientName: selectedRepayment.clientName,
+            clientNumber: selectedRepayment.clientNumber || 'N/A',
+          }}
+        />
       )}
     </div>
   );
