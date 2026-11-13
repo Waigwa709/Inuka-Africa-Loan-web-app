@@ -20,7 +20,7 @@ The **Inuka Africa Loan Repayment Tracker** is a modern, responsive, full-stack 
 - **Frontend**: React 19, TypeScript (strict mode), Tailwind CSS, Lucide React icons, Recharts.
 - **Backend / API**: Node.js & Express full-stack server mounted with Vite middleware, with stateless token authentication, per-IP rate limiting, and security headers.
 - **Authentication**: `scrypt` password hashing (Node.js `crypto`) and HMAC-SHA256 signed session tokens (`src/lib/server-auth.ts`). First registered user becomes administrator; registration closes afterwards.
-- **Relational Database**: **MySQL 8.0+** with raw DDL (`prisma/schema.sql`) enforcing `DECIMAL(12,2)` precision and foreign-key integrity, accessed through a `mysql2` connection pool configured exclusively via environment variables.
+- **Relational Database**: **MySQL 8.0+** with raw DDL (`database/schema.sql`) enforcing `DECIMAL(12,2)` precision and foreign-key integrity, accessed through a `mysql2` connection pool configured exclusively via environment variables.
 - **AI Integration Core**: `@google/genai` SDK using **Google Gemini 3.8 Flash** (`gemini-3.8-flash`) with telemetry headers and an extensible multi-provider abstraction (`IAIProvider`). AI financial context is built **server-side** from verified database queries (`src/lib/ai-context.ts`); client-supplied figures are never trusted. Deterministic verified fallbacks guarantee correct answers when the provider is unavailable.
 
 ```
@@ -139,8 +139,24 @@ AI_PROVIDER="gemini"   # or "openai" with OPENAI_API_KEY
 # PORT="3002"
 ```
 
+### Initialize the Database (required once)
+The full schema (`database/schema.sql`) and demo seed data (`database/seed.sql`) are included in the repository. After configuring `.env`:
+
+```bash
+pnpm install
+pnpm db:init          # creates the database, tables, and portfolio view
+pnpm db:init --seed   # optional: also load demo clients/loans/repayments
+```
+
+`db:init` is idempotent (`CREATE ... IF NOT EXISTS`) and safe to re-run. You can also import the SQL files manually with any MySQL client:
+
+```bash
+mysql -u root -p < database/schema.sql
+mysql -u root -p < database/seed.sql   # optional demo data
+```
+
 ### First Run & Authentication
-1. Start the server (`npm run dev`). The `users` table is created automatically if missing.
+1. Start the server (`pnpm dev`). The `users` table is created automatically if missing.
 2. Open the app and **sign up** — the first registered user becomes the administrator and registration closes automatically afterwards.
 3. All subsequent logins use email + password. Sessions last 12 hours.
 
@@ -160,12 +176,13 @@ The API suite creates and drops a dedicated `inukaloanapp_test` database; it nev
 
 ### Database Utilities
 ```bash
-npm run db:backup  # logical backup to backups/inukaloanapp-backup-<timestamp>.sql
-npm run db:seed    # optional demo data seeder
+pnpm db:init     # apply database/schema.sql (idempotent)
+pnpm db:seed     # load demo data via scripts/seed.ts (DELETES existing clients/loans/repayments first)
+pnpm db:backup   # logical backup to backups/inukaloanapp-backup-<timestamp>.sql
 ```
 
 ### Database Schema
-The relational schema lives in `prisma/schema.sql` (MySQL DDL) and `prisma/schema.prisma` (Prisma model definitions for reference). The app itself queries MySQL through a `mysql2` connection pool in `src/lib/db.ts`, configured exclusively from environment variables.
+The relational schema lives in `database/schema.sql` (MySQL DDL — run it via `pnpm db:init` or import it directly) and `prisma/schema.prisma` (Prisma model definitions for reference). Demo seed data lives in `database/seed.sql` (generated from `src/lib/mock-data.ts`). The app itself queries MySQL through a `mysql2` connection pool in `src/lib/db.ts`, configured exclusively from environment variables.
 
 ---
 

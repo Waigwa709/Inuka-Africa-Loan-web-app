@@ -12,6 +12,7 @@
     "test:unit": "tsx tests/run-tests.ts",
     "test:api": "tsx tests/api-tests.ts",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "db:init": "tsx scripts/init-db.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:backup": "tsx scripts/backup-db.ts",
     "lint": "tsc --noEmit"

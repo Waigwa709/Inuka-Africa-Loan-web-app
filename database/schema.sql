@@ -3,11 +3,11 @@
 -- MySQL Production Database Schema (Engine: InnoDB, Charset: utf8mb4)
 -- =====================================================================
 
-CREATE DATABASE IF NOT EXISTS `inuka_microfinance` 
+CREATE DATABASE IF NOT EXISTS `inukaloanapp` 
   CHARACTER SET utf8mb4 
   COLLATE utf8mb4_unicode_ci;
 
-USE `inuka_microfinance`;
+USE `inukaloanapp`;
 
 -- 1. Clients Table
 CREATE TABLE IF NOT EXISTS `clients` (
@@ -94,7 +94,20 @@ CREATE TABLE IF NOT EXISTS `ai_reports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 6. Materialized Portfolio Summary View
+-- 6. Users Table (authentication)
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` VARCHAR(36) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `full_name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(50) NULL,
+  `role` VARCHAR(50) NOT NULL DEFAULT 'admin',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_users_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 7. Materialized Portfolio Summary View
 CREATE OR REPLACE VIEW `vw_loan_portfolio_summary` AS
 SELECT 
   l.id AS loan_id,

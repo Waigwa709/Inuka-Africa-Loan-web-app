@@ -3,7 +3,7 @@
  *
  * These tests run against an ISOLATED test database (`inukaloanapp_test`),
  * never against the assessment database. The test database is created from
- * prisma/schema.sql and dropped again when the suite finishes.
+ * database/schema.sql and dropped again when the suite finishes.
  *
  * Covered scenarios include the three mandatory assessment tests:
  *   1. Successful repayment balance math (10,000 -> 3,000 -> 7,000 outstanding)
@@ -75,7 +75,7 @@ async function main() {
   const pool = (await import('../src/lib/db')).default;
 
   // 3. Apply schema (strip CREATE DATABASE / USE statements).
-  const schemaSql = fs.readFileSync(path.join(process.cwd(), 'prisma', 'schema.sql'), 'utf8');
+  const schemaSql = fs.readFileSync(path.join(process.cwd(), 'database', 'schema.sql'), 'utf8');
   const withoutComments = schemaSql
     .split('\n')
     .filter((line) => !line.trim().startsWith('--'))
