@@ -15,7 +15,30 @@ The **Inuka Africa Loan Repayment Tracker** is a modern, responsive, full-stack 
 
 ---
 
-## 2. Architecture & Tech Stack
+## 2. Repository Structure
+
+```
+Inuka-Africa-Loan-app/
+├── database/
+│   ├── schema.sql      # Creates the database, tables, relationships, constraints and views
+│   └── seed.sql        # Inserts fictional clients, loans and repayment records for testing
+├── prisma/
+│   └── schema.prisma   # Prisma model definitions (reference only)
+├── scripts/
+│   ├── init-db.ts      # Applies database/schema.sql (+ optional seed) from .env credentials
+│   ├── seed.ts         # Demo data seeder (TypeScript variant of database/seed.sql)
+│   └── backup-db.ts    # Non-destructive logical database backup
+├── src/                # React frontend + shared libraries (see Architecture below)
+├── tests/              # Unit tests and API integration tests
+├── server.ts           # Express API + Vite dev middleware
+├── .env.example        # Required environment variables (no real credentials)
+├── package.json        # Scripts: dev, build, test, db:init, db:seed, db:backup, lint
+└── README.md
+```
+
+---
+
+## 3. Architecture & Tech Stack
 
 - **Frontend**: React 19, TypeScript (strict mode), Tailwind CSS, Lucide React icons, Recharts.
 - **Backend / API**: Node.js & Express full-stack server mounted with Vite middleware, with stateless token authentication, per-IP rate limiting, and security headers.
@@ -64,6 +87,7 @@ src/
 │   └── api-tests.ts                 # API integration tests (isolated test database)
 │
 ├── scripts/
+│   ├── init-db.ts                   # Applies database/schema.sql (+ optional seed.sql)
 │   ├── seed.ts                      # Optional demo data seeder
 │   └── backup-db.ts                 # Non-destructive logical database backup
 │
@@ -72,7 +96,7 @@ src/
 
 ---
 
-## 3. Financial Data Integrity & Security Safeguards
+## 4. Financial Data Integrity & Security Safeguards
 
 - **Authoritative Calculations**: All balances, totals, and collection rates are calculated deterministically by server-side analytics and SQL (`DECIMAL(12,2)`, `GREATEST(0, ...)`). The AI **never** calculates authoritative balances.
 - **Server-Side AI Context**: AI endpoints rebuild financial context from verified database queries on every request; client-supplied `contextData` is ignored for financial figures.
@@ -89,7 +113,7 @@ src/
 
 ---
 
-## 4. How the AI Features Work
+## 5. How the AI Features Work
 
 ### Feature 1: AI Financial Insights Assistant (`/ai-chat`)
 - **Workflow**: Staff asks a question in plain English (e.g. *"How much money has been collected this month?"* or *"Which loans have the highest outstanding balances?"*).
@@ -112,7 +136,7 @@ src/
 
 ---
 
-## 5. How to Run the Application & Tests
+## 6. How to Run the Application & Tests
 
 ### Prerequisites
 - Node.js 20+ (v22 installed)
@@ -186,7 +210,7 @@ The relational schema lives in `database/schema.sql` (MySQL DDL — run it via `
 
 ---
 
-## 6. AI Usage Disclosure
+## 7. AI Usage Disclosure
 
 - **Primary Model**: Google Gemini 3.8 Flash (`gemini-3.8-flash`) via the modern `@google/genai` TypeScript SDK.
 - **Purpose**: Financial natural-language interpretation, structured management report synthesis, and field operational explanations.
