@@ -18,9 +18,10 @@ The **Inuka Africa Loan Repayment Tracker** is a modern, responsive, full-stack 
 ## 2. Architecture & Tech Stack
 
 - **Frontend**: React 19, TypeScript (strict mode), Tailwind CSS, Lucide React icons, Recharts.
-- **Backend / API**: Node.js & Express full-stack server mounted with Vite middleware.
-- **Relational Database**: **MySQL 8.0+** with **Prisma ORM** schemas (`prisma/schema.prisma`) and raw DDL (`prisma/schema.sql`) enforcing `DECIMAL(12,2)` precision and foreign-key integrity.
-- **AI Integration Core**: `@google/genai` SDK using **Google Gemini 3.8 Flash** (`gemini-3.8-flash`) with telemetry headers and an extensible multi-provider abstraction (`IAIProvider`).
+- **Backend / API**: Node.js & Express full-stack server mounted with Vite middleware, with stateless token authentication, per-IP rate limiting, and security headers.
+- **Authentication**: `scrypt` password hashing (Node.js `crypto`) and HMAC-SHA256 signed session tokens (`src/lib/server-auth.ts`). First registered user becomes administrator; registration closes afterwards.
+- **Relational Database**: **MySQL 8.0+** with raw DDL (`prisma/schema.sql`) enforcing `DECIMAL(12,2)` precision and foreign-key integrity, accessed through a `mysql2` connection pool configured exclusively via environment variables.
+- **AI Integration Core**: `@google/genai` SDK using **Google Gemini 3.8 Flash** (`gemini-3.8-flash`) with telemetry headers and an extensible multi-provider abstraction (`IAIProvider`). AI financial context is built **server-side** from verified database queries (`src/lib/ai-context.ts`); client-supplied figures are never trusted. Deterministic verified fallbacks guarantee correct answers when the provider is unavailable.
 
 ```
 src/
@@ -34,20 +35,37 @@ src/
 │   │   ├── prompts.ts               # Responsible AI domain system instructions
 │   │   └── types.ts                 # Strongly typed AI payloads
 │   │
-│   └── analytics/
-│       ├── portfolio-analytics.ts   # Portfolio-level calculations
-│       ├── repayment-analytics.ts   # Period collections & client rankings
-│       └── risk-analysis.ts         # Rule-based risk rules
+│   ├── analytics/
+│   │   ├── portfolio-analytics.ts   # Portfolio-level calculations
+│   │   ├── repayment-analytics.ts   # Period collections & client rankings
+│   │   └── risk-analysis.ts         # Rule-based risk rules
+│   │
+│   ├── auth.tsx                     # React AuthProvider (login/signup/session)
+│   ├── api.ts                       # Authenticated fetch client (bearer token, 401 handling)
+│   ├── store.tsx                    # Global store backed by the REST API
+│   ├── server-auth.ts               # Password hashing, token signing, user management
+│   ├── ai-context.ts                # Server-side verified financial context builder
+│   ├── mappers.ts                   # MySQL row -> domain type mapping
+│   └── db.ts                        # MySQL connection pool (env-driven)
 │
 ├── components/
 │   ├── ai/
 │   │   ├── ai-chat-assistant.tsx    # Natural language Q&A assistant
 │   │   ├── ai-report-generator.tsx  # Executive reporting suite
 │   │   └── risk-monitoring-dashboard.tsx # Rule-based early warning system
+│   ├── auth/                        # Login, signup, forgot-password pages
 │   ├── clients/                     # Client list, details & forms
 │   ├── loans/                       # Loan list, details & forms
 │   ├── repayments/                  # Repayment tracking, receipts & PDF export
 │   └── shared/                      # Reusable UI (stat cards, badges, toasts)
+│
+├── tests/
+│   ├── run-tests.ts                 # Unit tests (analytics, risk rules, AI grounding)
+│   └── api-tests.ts                 # API integration tests (isolated test database)
+│
+├── scripts/
+│   ├── seed.ts                      # Optional demo data seeder
+│   └── backup-db.ts                 # Non-destructive logical database backup
 │
 └── server.ts                        # Express API + Vite dev middleware
 ```
@@ -56,11 +74,18 @@ src/
 
 ## 3. Financial Data Integrity & Security Safeguards
 
-- **Authoritative Calculations**: All balances, totals, and collection rates are calculated deterministically by server-side analytics. The AI **never** calculates authoritative balances.
+- **Authoritative Calculations**: All balances, totals, and collection rates are calculated deterministically by server-side analytics and SQL (`DECIMAL(12,2)`, `GREATEST(0, ...)`). The AI **never** calculates authoritative balances.
+- **Server-Side AI Context**: AI endpoints rebuild financial context from verified database queries on every request; client-supplied `contextData` is ignored for financial figures.
 - **Strict Read-Only Role**: The AI is prohibited from modifying financial records, executing arbitrary SQL statements, or altering loan schedules.
-- **Zero Hallucination Policy**: If requested data is absent, the AI explicitly states that rather than fabricating figures.
+- **Zero Hallucination Policy**: If requested data is absent, the AI explicitly states that rather than fabricating figures. Deterministic verified fallbacks answer financial questions correctly even when the AI provider is unavailable.
+- **Hashed Credentials**: Passwords are hashed with `scrypt` (per-user salt); plaintext passwords are never stored or logged.
+- **Signed Sessions**: Session tokens are HMAC-SHA256 signed with `AUTH_SECRET` and expire after 12 hours; all `/api/*` routes (except auth and health) require a valid token.
+- **Rate Limiting**: Sliding-window per-IP limits protect authentication (20/15min), AI endpoints (30/min), and general API traffic (300/min).
+- **Security Headers**: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and `Permissions-Policy` are applied to every response.
+- **Error Sanitization**: Internal error details are logged server-side only; clients receive generic messages.
 - **Server-Side API Keys**: Provider API keys (`GEMINI_API_KEY`) remain strictly on the server and are never exposed to browser bundles.
-- **Input Sanitization**: User questions are treated as untrusted input and wrapped in strict prompt boundaries.
+- **Input Sanitization**: User questions are treated as untrusted input and wrapped in strict prompt boundaries; all API inputs are validated server-side.
+- **Transaction Safety**: Repayment recording locks the loan row (`SELECT ... FOR UPDATE`) inside a transaction, re-validates the outstanding balance, and rejects overpayments atomically.
 
 ---
 
@@ -91,19 +116,33 @@ src/
 
 ### Prerequisites
 - Node.js 20+ (v22 installed)
-- npm or bun
+- pnpm (project uses `pnpm-lock.yaml`; npm also works for the documented scripts)
 
 ### Environment Configuration (`.env`)
+Copy `.env.example` to `.env` and fill in real values. **Never commit `.env`.**
+
 ```bash
-# Gemini API Key
+# Database (required) - either DATABASE_URL or the discrete DB_* variables
+DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/inukaloanapp"
+# DB_HOST / DB_PORT / DB_USER / DB_PASSWORD / DB_NAME (alternative)
+
+# Authentication (required for stable sessions across restarts)
+AUTH_SECRET="long_random_string"
+
+# AI Provider (optional - deterministic verified fallback works without it)
 GEMINI_API_KEY="your_gemini_api_key_here"
+AI_PROVIDER="gemini"   # or "openai" with OPENAI_API_KEY
 
-# AI Provider Selection (default: gemini, supports: openai)
-AI_PROVIDER="gemini"
+# Optional: seed the first administrator on first startup
+# ADMIN_EMAIL / ADMIN_PASSWORD / ADMIN_NAME
 
-# Database Connection URL (for production MySQL instance)
-DATABASE_URL="mysql://inuka_user:password@localhost:3306/inuka_microfinance"
+# PORT="3002"
 ```
+
+### First Run & Authentication
+1. Start the server (`npm run dev`). The `users` table is created automatically if missing.
+2. Open the app and **sign up** — the first registered user becomes the administrator and registration closes automatically afterwards.
+3. All subsequent logins use email + password. Sessions last 12 hours.
 
 ### Running the Development Server
 ```bash
@@ -113,12 +152,20 @@ npm run dev
 
 ### Running Automated Tests
 ```bash
-npm test
-# Executes comprehensive automated test suite (22 tests covering financial analytics, risk rules, and AI grounding)
+npm test          # unit tests + API integration tests
+npm run test:unit # analytics / risk / AI grounding unit tests (22 tests)
+npm run test:api  # API integration tests against an isolated test database (45 tests)
+```
+The API suite creates and drops a dedicated `inukaloanapp_test` database; it never touches the assessment database.
+
+### Database Utilities
+```bash
+npm run db:backup  # logical backup to backups/inukaloanapp-backup-<timestamp>.sql
+npm run db:seed    # optional demo data seeder
 ```
 
 ### Database Schema
-The relational schema lives in `prisma/schema.sql` (MySQL DDL) and `prisma/schema.prisma` (Prisma model definitions for reference). The app itself queries MySQL through a `mysql2` connection pool in `src/lib/db.ts`.
+The relational schema lives in `prisma/schema.sql` (MySQL DDL) and `prisma/schema.prisma` (Prisma model definitions for reference). The app itself queries MySQL through a `mysql2` connection pool in `src/lib/db.ts`, configured exclusively from environment variables.
 
 ---
 

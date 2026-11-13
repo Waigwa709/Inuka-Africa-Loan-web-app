@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StoreProvider } from './lib/store';
+import React, { useState, useEffect } from 'react';
+import { StoreProvider, useStore } from './lib/store';
 import { NavigationProvider, useNavigation } from './lib/navigation';
 import { ToastProvider } from './components/shared/toast';
 import { ErrorBoundary } from './components/shared/error-boundary';
@@ -45,10 +45,19 @@ const AppContent: React.FC = () => {
   } = useNavigation();
 
   const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { refreshData } = useStore();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [authPage, setAuthPage] = useState<'login' | 'signup' | 'forgot-password'>('login');
+
+  // Load portfolio data once the user is authenticated (the store skips
+  // fetching when no session token exists).
+  useEffect(() => {
+    if (isAuthenticated) {
+      refreshData();
+    }
+  }, [isAuthenticated, refreshData]);
 
   // Show loading state while checking auth
   if (authLoading) {

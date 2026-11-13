@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../lib/auth';
 import { useToast } from '../shared/toast';
 import { InukaLogo } from '../layout/inuka-logo';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 interface LoginPageProps {
   onSwitchToSignup: () => void;
@@ -149,18 +149,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToSignup, onSwitch
               )}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-[#E7F3EA] rounded-lg border border-[#C6E5CD]">
-            <div className="flex items-start gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#2E7542] mt-0.5 shrink-0" />
-              <div className="text-xs">
-                <p className="font-semibold text-[#17231F] mb-1">Demo Credentials</p>
-                <p className="text-[#718078]">Email: admin@inuka.co.ke</p>
-                <p className="text-[#718078]">Password: admin123</p>
-              </div>
-            </div>
-          </div>
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">

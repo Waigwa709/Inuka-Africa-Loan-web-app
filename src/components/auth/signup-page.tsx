@@ -41,8 +41,8 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onSwitchToLogin }) => {
 
     if (!formData.password) {
       errs.password = 'Password is required.';
-    } else if (formData.password.length < 6) {
-      errs.password = 'Password must be at least 6 characters.';
+    } else if (formData.password.length < 8) {
+      errs.password = 'Password must be at least 8 characters.';
     }
 
     if (!formData.confirmPassword) {

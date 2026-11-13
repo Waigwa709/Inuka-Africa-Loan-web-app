@@ -44,19 +44,29 @@ export class AIService {
     } catch (err: any) {
       console.warn('AI Provider invocation failed; using deterministic verified fallback:', err?.message || err);
 
-      // Deterministic data-grounded fallback so the user always receives truthful answers
+      // Deterministic data-grounded fallback so the user always receives truthful answers.
+      // Intent matching is ordered from most specific to most generic so that e.g.
+      // "total outstanding balance" is not mistaken for "highest outstanding loan".
       let answer = '';
-      if (q.includes('disburs') || q.includes('total loan') || q.includes('portfolio') || q.includes('overall')) {
-        answer = `According to verified ledger records, Inuka Africa has disbursed a cumulative total of **${formatKES(metrics?.totalDisbursed)}** across **${metrics?.totalLoansCount ?? 0}** loan facilities. The current outstanding balance stands at **${formatKES(metrics?.totalOutstandingBalance)}**, with **${formatKES(metrics?.totalRepaid)}** successfully collected (${metrics?.collectionRate ?? 0}% collection recovery rate).`;
-      } else if (q.includes('month') || q.includes('recent collection') || q.includes('this month')) {
-        answer = `Collections recorded for the current month total **${formatKES(insights?.collectedThisMonth)}** across **${insights?.countThisMonth ?? 0}** transactions. Compared to the previous month (${formatKES(insights?.collectedPreviousMonth)}), month-over-month growth is **${insights?.monthOverMonthGrowth ?? 0}%**.`;
-      } else if (q.includes('highest') || q.includes('outstanding') || q.includes('top loan')) {
+      const has = (...words: string[]) => words.some((w) => q.includes(w));
+
+      if (has('highest', 'top loan', 'largest', 'biggest')) {
         const top = insights?.topOutstandingLoans[0];
         answer = top
           ? `The facility with the highest remaining balance is **${top.loanReference}** issued to **${top.clientName}**, with an outstanding balance of **${formatKES(top.outstandingBalance)}** against an initial obligation of ${formatKES(top.totalAmountDue)}.`
-          : 'All active facilities have zero outstanding balance.';
-      } else if (q.includes('active') || q.includes('how many loan')) {
-        answer = `Currently, Inuka Africa is tracking **${metrics?.activeLoansCount ?? 0}** active loan facilities (**${metrics?.partiallyPaidLoansCount ?? 0}** in repayment, **${metrics?.outstandingLoansCount ?? 0}** awaiting first installment). **${metrics?.fullyPaidLoansCount ?? 0}** facilities have reached full settlement.`;
+          : 'There are currently no outstanding loan balances in the portfolio.';
+      } else if (has('fully paid', 'fully repaid', 'settled', 'closed loan')) {
+        answer = `**${metrics?.fullyPaidLoansCount ?? 0}** loan facilities have been fully settled with zero outstanding balance. **${metrics?.partiallyPaidLoansCount ?? 0}** facilities are in active repayment and **${metrics?.outstandingLoansCount ?? 0}** are awaiting their first installment.`;
+      } else if (has('outstanding', 'balance', 'remaining', 'owe', 'debt')) {
+        answer = `The total outstanding loan balance across the portfolio is **${formatKES(metrics?.totalOutstandingBalance)}**, derived from a total amount due of **${formatKES(metrics?.totalAmountDue)}** less **${formatKES(metrics?.totalRepaid)}** collected to date.`;
+      } else if (has('repaid', 'collected', 'paid so far', 'total repayment', 'recovery')) {
+        answer = `Inuka Africa has collected a cumulative total of **${formatKES(metrics?.totalRepaid)}** across all repayment transactions, representing a **${metrics?.collectionRate ?? 0}%** recovery rate against the total amount due.`;
+      } else if (has('month', 'recent collection', 'this month')) {
+        answer = `Collections recorded for the current month total **${formatKES(insights?.collectedThisMonth)}** across **${insights?.countThisMonth ?? 0}** transactions. Compared to the previous month (${formatKES(insights?.collectedPreviousMonth)}), month-over-month growth is **${insights?.monthOverMonthGrowth ?? 0}%**.`;
+      } else if (has('active', 'how many loan', 'how many client', 'borrower')) {
+        answer = `Currently, Inuka Africa is tracking **${metrics?.activeLoansCount ?? 0}** active loan facilities (**${metrics?.partiallyPaidLoansCount ?? 0}** in repayment, **${metrics?.outstandingLoansCount ?? 0}** awaiting first installment) for **${metrics?.totalClientsCount ?? 0}** registered clients. **${metrics?.fullyPaidLoansCount ?? 0}** facilities have reached full settlement.`;
+      } else if (has('disburs', 'principal', 'total loan', 'portfolio', 'overall', 'summary')) {
+        answer = `According to verified ledger records, Inuka Africa has disbursed a cumulative total of **${formatKES(metrics?.totalDisbursed)}** across **${metrics?.totalLoansCount ?? 0}** loan facilities. The current outstanding balance stands at **${formatKES(metrics?.totalOutstandingBalance)}**, with **${formatKES(metrics?.totalRepaid)}** successfully collected (${metrics?.collectionRate ?? 0}% collection recovery rate).`;
       } else {
         answer = `Verified Institution Snapshot:\n• Total Disbursed: **${formatKES(metrics?.totalDisbursed)}**\n• Total Repaid: **${formatKES(metrics?.totalRepaid)}**\n• Outstanding Balance: **${formatKES(metrics?.totalOutstandingBalance)}**\n• Overall Collection Efficiency: **${metrics?.collectionRate ?? 0}%**\n• Active Borrowers: **${metrics?.totalClientsCount ?? 0}**`;
       }
@@ -133,9 +143,13 @@ export class AIService {
       console.warn('AI Risk explanation fallback triggered:', err?.message || err);
       const a = request.assessment;
       const reason = a.detectedIndicators.map((i) => i.label).join('; ') || 'Standard monitoring';
+      const balanceText =
+        a.outstandingBalance > 0
+          ? `has an active outstanding balance of ${formatKES(a.outstandingBalance)} (${a.outstandingRatio}% of facility obligation)`
+          : 'is fully settled with zero outstanding balance';
 
       return {
-        explanation: `Facility ${a.loanReference} (${a.clientName}) has an active outstanding balance of ${formatKES(a.outstandingBalance)} (${a.outstandingRatio}% of facility obligation). Operational flags: ${reason}.`,
+        explanation: `Facility ${a.loanReference} (${a.clientName}) ${balanceText}. Operational flags: ${reason}.`,
         suggestedAction: a.suggestedAction,
         contactPriority: a.attentionCategory === 'High Attention' ? 'Immediate' : a.attentionCategory === 'Medium Attention' ? 'Scheduled' : 'Routine',
       };

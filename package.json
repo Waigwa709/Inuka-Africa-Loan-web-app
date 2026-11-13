@@ -8,8 +8,12 @@
     "start": "tsx server.ts",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "tsx tests/run-tests.ts",
-    "clean": "rm -rf dist server.js",
+    "test": "tsx tests/run-tests.ts && tsx tests/api-tests.ts",
+    "test:unit": "tsx tests/run-tests.ts",
+    "test:api": "tsx tests/api-tests.ts",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:backup": "tsx scripts/backup-db.ts",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

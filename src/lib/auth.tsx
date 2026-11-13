@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { apiFetch, setAuthToken, clearAuthSession, getAuthToken } from './api';
 
 interface User {
   id: string;
@@ -23,97 +24,104 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const AUTH_STORAGE_KEY = 'inuka_auth_user';
+const USER_KEY = 'inuka_auth_user';
+
+const mapServerUser = (u: any): User => ({
+  id: u.id,
+  email: u.email,
+  fullName: u.fullName ?? u.full_name ?? '',
+  phone: u.phone,
+  role: u.role || 'admin',
+  createdAt: u.createdAt ?? u.created_at ?? new Date().toISOString(),
+});
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // On mount, validate any stored session against the backend.
   useEffect(() => {
-    // Check for stored user on mount
-    const storedUser = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        localStorage.removeItem(AUTH_STORAGE_KEY);
+    const validateSession = async () => {
+      const token = getAuthToken();
+      if (!token) {
+        setIsLoading(false);
+        return;
       }
-    }
-    setIsLoading(false);
+      try {
+        const res = await apiFetch('/api/auth/me');
+        if (res.ok) {
+          const data = await res.json();
+          const u = mapServerUser(data.user);
+          setUser(u);
+          localStorage.setItem(USER_KEY, JSON.stringify(u));
+        } else {
+          clearAuthSession();
+        }
+      } catch {
+        clearAuthSession();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    validateSession();
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Demo credentials - in production this would be an API call
-    if (email === 'admin@inuka.co.ke' && password === 'admin123') {
-      const demoUser: User = {
-        id: 'user-001',
-        email: 'admin@inuka.co.ke',
-        fullName: 'Operations Admin',
-        phone: '+254 700 000 000',
-        role: 'admin',
-        createdAt: new Date().toISOString(),
-      };
-      setUser(demoUser);
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(demoUser));
+    try {
+      const res = await apiFetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Login failed. Please try again.' };
+      }
+      setAuthToken(data.token);
+      const u = mapServerUser(data.user);
+      setUser(u);
+      localStorage.setItem(USER_KEY, JSON.stringify(u));
       return { success: true };
+    } catch {
+      return { success: false, error: 'Could not reach the server. Please try again.' };
     }
-
-    return { success: false, error: 'Invalid email or password. Use admin@inuka.co.ke / admin123 for demo.' };
   };
 
   const signup = async (data: { email: string; password: string; fullName: string; phone?: string }) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Validate input
-    if (!data.email || !data.password || !data.fullName) {
-      return { success: false, error: 'All fields are required.' };
+    try {
+      const res = await apiFetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      const resData = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { success: false, error: resData.error || 'Registration failed.' };
+      }
+      setAuthToken(resData.token);
+      const u = mapServerUser(resData.user);
+      setUser(u);
+      localStorage.setItem(USER_KEY, JSON.stringify(u));
+      return { success: true };
+    } catch {
+      return { success: false, error: 'Could not reach the server. Please try again.' };
     }
-
-    if (data.password.length < 6) {
-      return { success: false, error: 'Password must be at least 6 characters.' };
-    }
-
-    // Create new user
-    const newUser: User = {
-      id: `user-${Date.now()}`,
-      email: data.email,
-      fullName: data.fullName,
-      phone: data.phone,
-      role: 'officer',
-      createdAt: new Date().toISOString(),
-    };
-
-    setUser(newUser);
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(newUser));
-    return { success: true };
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
+    apiFetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
     setUser(null);
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-  };
+    clearAuthSession();
+  }, []);
 
   const updateProfile = (data: Partial<User>) => {
     if (!user) return;
     const updatedUser = { ...user, ...data };
     setUser(updatedUser);
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(updatedUser));
+    localStorage.setItem(USER_KEY, JSON.stringify(updatedUser));
   };
 
-  const forgotPassword = async (email: string) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    if (!email) {
-      return { success: false, error: 'Email is required.' };
-    }
-
-    // In production, this would send a reset email
-    return { success: true };
+  const forgotPassword = async (_email: string) => {
+    // Password reset is not available in this deployment; contact the administrator.
+    return { success: false, error: 'Password reset is not available. Please contact your system administrator.' };
   };
 
   return (

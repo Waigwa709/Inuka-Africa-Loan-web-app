@@ -16,6 +16,7 @@ import {
   FileDown,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
+import { apiFetch } from '../../lib/api';
 import { calculatePortfolioMetrics } from '../../lib/analytics/portfolio-analytics';
 import { calculateRepaymentInsights } from '../../lib/analytics/repayment-analytics';
 import { assessPortfolioRisk } from '../../lib/analytics/risk-analysis';
@@ -41,9 +42,8 @@ export const AIReportGenerator: React.FC = () => {
   const handleGenerate = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch('/api/ai/reports', {
+      const response = await apiFetch('/api/ai/reports', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           reportType,
           period,

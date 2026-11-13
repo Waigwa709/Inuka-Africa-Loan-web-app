@@ -19,6 +19,7 @@ import { calculatePortfolioMetrics } from '../../lib/analytics/portfolio-analyti
 import { calculateRepaymentInsights } from '../../lib/analytics/repayment-analytics';
 import { AIChatMessage } from '../../lib/ai/types';
 import { useToast } from '../shared/toast';
+import { apiFetch } from '../../lib/api';
 
 const SUGGESTED_QUESTIONS = [
   'What is the overall loan portfolio and collection recovery rate?',
@@ -75,9 +76,8 @@ export const AIChatAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ai/chat', {
+      const response = await apiFetch('/api/ai/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: textToSend,
           contextData: {

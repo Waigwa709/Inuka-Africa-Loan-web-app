@@ -17,6 +17,7 @@ import {
   Info,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
+import { apiFetch } from '../../lib/api';
 import { useNavigation } from '../../lib/navigation';
 import { assessPortfolioRisk, LoanRiskAssessment, AttentionCategory } from '../../lib/analytics/risk-analysis';
 import { formatKES } from '../../lib/currency';
@@ -56,9 +57,8 @@ export const RiskMonitoringDashboard: React.FC = () => {
     setAiExplanationText(null);
 
     try {
-      const res = await fetch('/api/ai/risk-analysis', {
+      const res = await apiFetch('/api/ai/risk-analysis', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assessment }),
       });
 

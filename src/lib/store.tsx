@@ -3,6 +3,7 @@ import { Client, ClientWithStats } from '../types/client';
 import { Loan } from '../types/loan';
 import { Repayment } from '../types/repayment';
 import { roundCurrency } from './currency';
+import { apiFetch, getAuthToken } from './api';
 
 interface AddClientParams {
   clientNumber: string;
@@ -105,14 +106,21 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
+    // Never call authenticated endpoints without a session token; doing so
+    // would trigger a 401 -> session clear -> page reload loop on the
+    // login screen.
+    if (!getAuthToken()) {
+      setLoading(false);
+      return;
+    }
     try {
       setLoading(true);
       setError(null);
 
       const [clientsRes, loansRes, repaymentsRes] = await Promise.all([
-        fetch('/api/clients'),
-        fetch('/api/loans'),
-        fetch('/api/repayments'),
+        apiFetch('/api/clients'),
+        apiFetch('/api/loans'),
+        apiFetch('/api/repayments'),
       ]);
 
       if (!clientsRes.ok || !loansRes.ok || !repaymentsRes.ok) {
@@ -189,9 +197,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const addClient = async (params: AddClientParams) => {
     try {
-      const response = await fetch('/api/clients', {
+      const response = await apiFetch('/api/clients', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params),
       });
 
@@ -210,9 +217,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const addLoan = async (params: AddLoanParams) => {
     try {
-      const response = await fetch('/api/loans', {
+      const response = await apiFetch('/api/loans', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params),
       });
 
@@ -231,9 +237,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const recordRepayment = async (params: RecordRepaymentParams) => {
     try {
-      const response = await fetch('/api/repayments', {
+      const response = await apiFetch('/api/repayments', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params),
       });
 
